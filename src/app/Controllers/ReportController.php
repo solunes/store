@@ -15,6 +15,8 @@ class ReportController extends Controller {
 	protected $url;
 
 	public function __construct(UrlGenerator $url) {
+    $this->middleware('auth');
+    $this->middleware('permission:dashboard');
 	  $this->prev = $url->previous();
 	}
 

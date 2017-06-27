@@ -1,2 +1,2 @@
-# store
-Proyecto de tienda en linea
+# Store
+Proyecto de tienda en linea de Solunes Digital

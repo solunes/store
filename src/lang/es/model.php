@@ -1,0 +1,55 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Language Lines
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    // Módulo de ERP
+    'currency' => 'Moneda|Monedas',
+    'place' => 'Sucursal|Sucursales',
+    'tax' => 'Impuesto|Impuestos',
+    // Módulo de Contabilidad
+    'transaction-code' => 'Código de Transacción|Códigos de Transacciones',
+    'account' => 'Cuenta|Cuentas',
+    'accounts-payable' => 'Cuenta por Pagar|Cuentas por Pagar',
+    'accounts-receivable' => 'Cuenta por Cobrar|Cuentas por Cobrar',
+    'bank-account' => 'Cuenta Bancaria|Cuentas Bancarias',
+    'concept' => 'Concepto|Conceptos',
+    'expense' => 'Egreso|Egresos',
+    'income' => 'Ingreso|Ingresos',
+    'pending-payment' => 'Cuenta Pendiente|Cuentas Pendientes',
+    'place-accountability' => 'Detalles de Cuenta|Detalle de Cuentas',
+    'place-movement' => 'Transferencia entre Cuentas|Transferencias entre Cuentas',
+    // Módulo de Ventas
+    'cart' => 'Carro de Compra|Carros de Compras',
+    'cart-item' => 'Item de Carro|Items de Carro',
+    'category' => 'Categoria|Categoria',
+    'city' => 'Ciudad|Ciudades',
+    'payment' => 'Pago|Pagos',
+    'payment-receipt' => 'Pago por Recibo|Pagos por Recibo',
+    'payment-pagosnet' => 'Pago por Pagosnet|Pagos por Pagosnet',
+    'sale' => 'Venta|Ventas',
+    'sale-item' => 'Item de Venta|Items de Venta',
+    'refund' => 'Devolución|Devoluciones',
+    'refund-item' => 'Item de Devolución|Items de Devolución',
+    // Módulo de Capital
+    'partner' => 'Socio|Socios',
+    'partner-detail' => 'Detalle de Socio|Detalles de Socios',
+    'partner-movement' => 'Movimiento de Socio|Movimientos de Socios',
+    // Módulo de Productos
+    'inventory-movement' => 'Movimiento de Inventario|Movimientos de Inventario',
+    'product' => 'Producto|Productos',
+    'product-group' => 'Grupo de Producto|Grupos de Productos',
+    'product-variation' => 'Variación de Producto|Variaciones de Productos',
+    'product-stock' => 'Stock de Producto|Stock de Productos',
+    'product-image' => 'Imagen de Producto|Imágenes de Productos',
+    'purchase' => 'Orden de Compra|Ordenes de Compras',
+    'purchase-product' => 'Compra de Producto|Compras de Productos',
+    'variation' => 'Variación|Variaciones',
+    
+];

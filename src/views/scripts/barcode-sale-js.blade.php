@@ -37,9 +37,9 @@
     });
     $(document).on("change paste keyup", 'input.price', function() {
       console.log('Recalculando');
-      if(fixNumber($(this).val())>fixNumber($(this).data('invoice_price'))){
+      if(fixNumber($(this).val())>fixNumber($(this).data('price'))){
         $('#notification-bar').text('El precio no puede ser mayor al original...');
-        $(this).val($(this).data('invoice_price'));
+        $(this).val($(this).data('price'));
       }
       product_id = $(this).attr('rel');
       recalculateProductTotal(product_id);
@@ -180,12 +180,12 @@
           console.log('array:' + array);
           var name = data.name;
           var price = data.price;
-          var invoice_price = data.invoice_price;
+          var no_invoice_price = data.no_invoice_price;
           console.log('price:' + price);
-          console.log('invoice_price:' + invoice_price);
+          console.log('no_invoice_price:' + no_invoice_price);
           var currency = data.currency;
           var max_quantity = parseInt(data.quantity);
-          var final_price = parseInt(quantity)*fixNumber(invoice_price);
+          var final_price = parseInt(quantity)*fixNumber(price);
           console.log('final_price:' + final_price);
           if(rowval){
             $('#products>tbody>tr:last').clone().insertAfter('#products>tbody>tr:last');
@@ -193,10 +193,10 @@
           }
           $('#products>tbody>tr:last input.product_id').val(product_id);
           $('#products>tbody>tr:last input.product_name').val(name);
-          $('#products>tbody>tr:last input.price').val(invoice_price);
-          $('#products>tbody>tr:last input.price').attr('placeholder', invoice_price + ' ' + currency);
-          $('#products>tbody>tr:last input.price').attr('title', 'El precio sin factura sugerido es de ' + price + ' ' + currency);
-          $('#products>tbody>tr:last input.price').data('invoice_price', invoice_price);
+          $('#products>tbody>tr:last input.price').val(price);
+          $('#products>tbody>tr:last input.price').attr('placeholder', price + ' ' + currency);
+          $('#products>tbody>tr:last input.price').attr('title', 'El precio sin factura sugerido es de ' + no_invoice_price + ' ' + currency);
+          $('#products>tbody>tr:last input.price').data('price', price);
           $('#products>tbody>tr:last input.price').attr('rel', product_id);
           $('#products>tbody>tr:last input.currency').val(currency);
           $('#products>tbody>tr:last input.currency').attr('rel', product_id);

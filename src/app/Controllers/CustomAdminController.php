@@ -176,7 +176,7 @@ class CustomAdminController extends Controller {
 
 	public function getCheckProduct($id) {
 		$item = \Solunes\Store\App\Product::with('currency')->find($id);
-      	return ['name'=>$item->name, 'price'=>$item->no_invoice_price, 'invoice_price'=>$item->price, 'currency'=>$item->currency->name, 'quantity'=>$item->total_stock];
+      	return ['name'=>$item->name, 'price'=>$item->price, 'no_invoice_price'=>$item->no_invoice_price, 'currency'=>$item->currency->name, 'quantity'=>$item->total_stock];
 	}
     
 	public function getPurchaseAddProduct($purchase_id, $product_id) {

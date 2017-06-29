@@ -15,7 +15,7 @@
           <td>Vendedor</td>
           <td>Socio</td>
           <td>Precio</td>
-          <td>Descuento</td>
+          <td>Diferencia</td>
           <td>Cantidad</td>
           <td>Total</td>
           <td>Fecha</td>
@@ -28,14 +28,14 @@
           <tr>
             <td>{{ $item['count'] }}</td>
             <td>{{ $item['item']->product->barcode }}</td>
-            <td>{{ $item['item']->product->category->name.' - '.$item['item']->product->name }}</td>
+            <td><a target="_blank" href="{{ url('admin/model/product/view/'.$item['item']->product_id) }}">{{ $item['item']->product->category->name.' - '.$item['item']->product->name }}</a></td>
             <td>{{ $item['sale']->user->name }}</td>
             <td>{{ $item['item']->product->partner->name }}</td>
             <td>{{ $item['item']->price.' '.$item['item']->currency->name }}</td>
             @if($item['sale']->invoice)
-              <td>{{ number_format($item['item']->product->invoice_price - $item['item']->price, 2, '.', '').' '.$item['item']->currency->name }}</td>
+              <td>{{ number_format($item['item']->price - $item['item']->product->price, 2, '.', '').' '.$item['item']->currency->name }} (PV)</td>
             @else
-              <td>{{ number_format($item['item']->product->price - $item['item']->price, 2, '.', '').' '.$item['item']->currency->name }}</td>
+              <td>{{ number_format($item['item']->price - $item['item']->product->no_invoice_price, 2, '.', '').' '.$item['item']->currency->name }} (PVSF)</td>
             @endif
             <td>{{ $item['item']->quantity }}</td>
             <td>{{ $item['total'].' '.$item['item']->currency->name }}</td>

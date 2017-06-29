@@ -19,7 +19,7 @@ class RegisterPlaceAccountability {
             } else {
                 $currency_balance = 0;
             }
-            $amount = \Store::calculate_currency($event->amount, $currency, $event->currency);
+            $amount = \Store::calculate_currency($event->amount, $currency, $event->currency, $event->exchange);
             if($event->type=='debit'){
                 $event->debit = $amount;
                 $currency_balance += $event->amount;

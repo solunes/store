@@ -31,7 +31,7 @@ class ReportController extends Controller {
     $account_array = \Solunes\Store\App\Account::whereIn('concept_id', $concept_array)->lists('id')->toArray();
     $accounts = \Solunes\Store\App\PlaceAccountability::whereIn('account_id', $account_array)->where('created_at', '>=', $array['i_date'])->where('created_at', '<=', $array['e_date']);
     if($array['place']!='all'){
-      $accounts = $accounts->where('place_id', $array['place']);
+      $accounts = $accounts->where('parent_id', $array['place']);
     }
     $accounts = $accounts->get();
     $store = 0;

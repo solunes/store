@@ -57,7 +57,8 @@ class RegisterSale {
                 $arr[] = \Store::register_account($event->place_id, 'credit', $asset_cash, 1, abs($cash_bob), $name.': Cambio devuelto');
             }
             if($cash_usd>0){
-                $arr[] = \Store::register_account($event->place_id, 'debit', $asset_cash, 2, $cash_usd, $name);
+                $exchange = $event->exchange;
+                $arr[] = \Store::register_account($event->place_id, 'debit', $asset_cash, 2, $cash_usd, $name, $exchange);
             }
             if($pos_bob>0){
                 $arr[] = \Store::register_account($event->place_id, 'debit', $asset_bank, 1, $pos_bob, $name);

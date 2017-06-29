@@ -114,10 +114,13 @@ class Store {
 
     public static function calculate_currency($item_amount, $main_currency, $item_currency) {
         if($main_currency->id!=$item_currency->id){
+            if(!$exchange){
+                $exchange = $item_currency->main_exchange;
+            }
             if($main_currency->type!='main'){
-                $item_amount = $item_amount / $item_currency->main_exchange;
+                $item_amount = $item_amount / $exchange;
             } else {
-                $item_amount = $item_amount * $item_currency->main_exchange;
+                $item_amount = $item_amount * $exchange;
             }
         }
         return round($item_amount, 2);
@@ -137,8 +140,8 @@ class Store {
         return $new;
     }
 
-    public static function register_account($place_id, $type, $account_id, $currency_id, $amount, $name) {
-        return ['place_id'=>$place_id, 'type'=>$type, 'account_id'=>$account_id, 'currency_id'=>$currency_id, 'amount'=>$amount, 'name'=>$name];
+    public static function register_account($place_id, $type, $account_id, $currency_id, $amount, $name, $exchange = NULL) {
+        return ['place_id'=>$place_id, 'type'=>$type, 'account_id'=>$account_id, 'currency_id'=>$currency_id, 'amount'=>$amount, 'name'=>$name, 'exchange'=>$exchange];
     }
         
     public static function register_account_array($array, $created_at = NULL, $transaction_code = NULL) {
@@ -157,6 +160,7 @@ class Store {
                 $account_detail->name = $item['name'];
                 $account_detail->account_id = $item['account_id'];
                 $account_detail->currency_id = $item['currency_id'];
+                $account_detail->exchange = $item['exchange'];
                 $account_detail->amount = $item['amount'];
                 if(isset($item['pending_payment_id'])){
                     $account_detail->pending_payment_id = $item['pending_payment_id'];

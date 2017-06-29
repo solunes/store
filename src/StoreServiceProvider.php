@@ -34,6 +34,7 @@ class StoreServiceProvider extends ServiceProvider {
 
         /* Comandos de Consola */
         $this->commands([
+            \Solunes\Store\App\Console\AccountCheck::class,
             \Solunes\Store\App\Console\TestSystem::class,
         ]);
 

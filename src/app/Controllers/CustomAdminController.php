@@ -329,14 +329,13 @@ class CustomAdminController extends Controller {
 		$pending_sum = 0;
 		foreach($request->input('product_id') as $product_key => $product_id){
 			if($product = \Solunes\Store\App\Product::find($product_id)){
-				$total = $subitem->price * $subitem->quantity;
 				$subitem = new \Solunes\Store\App\SaleItem;
 				$subitem->parent_id = $item->id;
 				$subitem->product_id = $product->id;
 				$subitem->currency_id = $product->currency_id;
 				$subitem->price = $request->input('price')[$product_key];
 				$subitem->quantity = $request->input('quantity')[$product_key];
-				$subitem->total = $total;
+				$subitem->total = $subitem->price * $subitem->quantity;
 				if($item->credit&&$item->credit_amount>0){
 					$pending = round($credit_percentage * $total, 2);
 					$pending_sum += $pending;

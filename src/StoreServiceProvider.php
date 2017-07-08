@@ -30,6 +30,7 @@ class StoreServiceProvider extends ServiceProvider {
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         //$loader->alias('HTML', 'Collective\Html\HtmlFacade');
 
+        $loader->alias('CustomStore', '\Solunes\Store\App\Helpers\CustomStore');
         $loader->alias('Store', '\Solunes\Store\App\Helpers\Store');
 
         /* Comandos de Consola */

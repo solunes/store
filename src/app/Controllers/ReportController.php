@@ -20,15 +20,13 @@ class ReportController extends Controller {
 	  $this->prev = $url->previous();
 	}
 
-
   public function getSalesReport() {
     $model = \Solunes\Store\App\Sale::whereNotNull('id');
     $array = \Store::check_report_header($model);
     $array['show_place'] = true;
 
-    $concept_array = ['income_sale', 'income_sale_credit', 'expense_refund'];
-    $concept_array = \Solunes\Store\App\Concept::whereIn('code', $concept_array)->lists('id')->toArray();
-    $account_array = \Solunes\Store\App\Account::whereIn('concept_id', $concept_array)->lists('id')->toArray();
+    $codes_array = ['income_sale', 'income_sale_credit', 'expense_refund'];
+    $account_array = \Solunes\Store\App\Account::whereIn('code', $codes_array)->lists('id')->toArray();
     $accounts = \Solunes\Store\App\PlaceAccountability::whereIn('account_id', $account_array)->where('created_at', '>=', $array['i_date'])->where('created_at', '<=', $array['e_date']);
     if($array['place']!='all'){
       $accounts = $accounts->where('parent_id', $array['place']);
@@ -42,6 +40,7 @@ class ReportController extends Controller {
     $pending_total = 0;
     $sales_total = 0;
     $refund_total = 0;
+    $currency = \Solunes\Store\App\Currency::find(1);
     foreach($accounts as $item){
       $new_total = \Store::calculate_currency($item->amount, $array['currency'], $item->currency);
       if($item->account->code=='expense_refund'){
@@ -52,7 +51,7 @@ class ReportController extends Controller {
         $store += $new_total;
         $sales_total += $new_total;
         foreach($item->other_accounts as $other){
-          $other_amount = \Store::calculate_currency($other->amount, $array['currency'], $other->currency);
+          $other_amount = \Func::calculate_currency($other->real_amount, $array['currency'], $currency);
           if($other->account->concept->code=='asset_cash'){
             $cash += $other_amount;
           } else if($other->account->concept->code=='asset_bank'){

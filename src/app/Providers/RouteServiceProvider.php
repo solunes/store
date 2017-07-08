@@ -66,7 +66,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(Router $router)
     {
-        //
+        parent::mapWebRoutes($router);
     }
 
 }

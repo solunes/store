@@ -57,7 +57,8 @@
       <thead>
         <tr class="title">
           <td>Nº</td>
-          <td>Nombre</td>
+          <td>Socio</td>
+          <td>Detalle</td>
           <td>Fecha</td>
           <td>Total</td>
           <td>Ver</td>
@@ -67,6 +68,7 @@
         @foreach($items as $item_key => $item)
           <tr class=" @if($item->type=='credit') edit @elseif($item->type=='debit') delete @endif ">
             <td>{{ $item_key + 1 }}</td>
+            <td>{{ $item->parent->name }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
             <td>{{ $item->amount.' '.$item->currency->name }}</td>

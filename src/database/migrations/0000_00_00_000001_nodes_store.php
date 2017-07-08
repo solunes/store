@@ -89,6 +89,7 @@ class NodesStore extends Migration
             $table->enum('type', ['credit','debit'])->nullable();
             $table->string('reference')->nullable();
             $table->integer('currency_id')->unsigned();
+            $table->decimal('exchange', 10, 2)->nullable();
             $table->decimal('amount', 10, 2)->nullable();
             $table->decimal('real_amount', 10, 2)->nullable();
             $table->decimal('credit', 10, 2)->nullable();

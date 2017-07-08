@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      .block { display: inline-block; margin-left: 25px; margin-right: 25px; width: auto; margin-bottom: 30px; text-align: center; }
+      .block { display: inline-block; margin-left: 1%; margin-right: 1%; width: auto; margin-bottom: 30px; text-align: center; width: 30%; }
       .block img { margin-bottom: 10px; }
     </style>
 </head>

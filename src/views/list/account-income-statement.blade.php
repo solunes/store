@@ -14,12 +14,12 @@
         </tr>
       </thead>
       <tbody>
-        @include('includes.account-income-sub', ['items'=>$items['Ingresos por Ventas']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Ingresos por Ventas']])
         <tr class="title">
           <td>TOTAL DE VENTAS</td>
           <td>{{ $sales.' '.$currency->name }}</td>
         </tr>
-        @include('includes.account-income-sub', ['items'=>$items['Costo de Venta']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Costo de Venta']])
         <tr class="title">
           <td>TOTAL DE COSTO DE VENTAS</td>
           <td>{{ $sales_cost.' '.$currency->name }}</td>
@@ -28,7 +28,7 @@
           <td>UTILIDAD BRUTA</td>
           <td>{{ $brute_profit.' '.$currency->name }}</td>
         </tr>
-        @include('includes.account-income-sub', ['items'=>$items['Gasto Operativo']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Gasto Operativo']])
         <tr class="title">
           <td>TOTAL GASTO OPERACION</td>
           <td>{{ $operations_costs .' '.$currency->name }}</td>
@@ -37,18 +37,18 @@
           <td>UT NETA DE OPERACION  </td>
           <td>{{ $operations_profit .' '.$currency->name }}</td>
         </tr>
-        @include('includes.account-income-sub', ['items'=>$items['Otro Ingreso']])
-        @include('includes.account-income-sub', ['items'=>$items['Otro Gasto']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Otro Ingreso']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Otro Gasto']])
         <tr class="title">
           <td>UT ANT IMPUESTOS</td>
           <td>{{ $before_tax_profit.' '.$currency->name }}</td>
         </tr>
-        @include('includes.account-income-sub', ['items'=>$items['Impuestos IUE']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Impuestos IUE']])
         <tr class="title">
           <td>UTILIDAD ANTES DE PARTIDAS EXTRAORDINARIAS</td>
           <td>{{ $after_tax_profit.' '.$currency->name }}</td>
         </tr>
-        @include('includes.account-income-sub', ['items'=>$items['Ajuste por Inflación']])
+        @include('store::includes.account-income-sub', ['items'=>$items['Ajuste por Inflación']])
         <tr class="title">
           <td>UTILIDAD NETA</td>
           <td>{{ $profit.' '.$currency->name }}</td>

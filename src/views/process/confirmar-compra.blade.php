@@ -1,5 +1,5 @@
 @extends('layouts/master')
-@include('store::helpers.meta')
+@include('helpers.meta')
 
 @section('css')
 @endsection

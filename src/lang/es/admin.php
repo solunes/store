@@ -25,7 +25,10 @@ return array(
 	'credit' => 'Crédito',
 	'customer' => 'Cliente',
 	'debit' => 'Débito',
-	"delivered" => "Enviado",
+	'delivered' => 'Enviado',
+	'discount_percentage' => 'Porcentaje de Descuento',
+	'discount_quantities' => 'Oferta de Cantidades',
+	'discount_value' => 'Monto de Descuento',
 	'dollar' => 'Dolar',
 	'expense' => 'Egreso',
 	'finished' => 'Finalizado',
@@ -66,6 +69,7 @@ return array(
 	'storage' => 'Depósito',
 	'supplier' => 'Proveedor',
 	'transference' => 'Transferencia',
+	'unpaid' => 'Sin Pagar',
 	'web' => 'Web',
 
 );

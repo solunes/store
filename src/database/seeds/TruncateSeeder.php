@@ -15,10 +15,19 @@ class TruncateSeeder extends Seeder {
     {
     	
         // Módulo de Ventas
+        \Solunes\Store\App\SpBankDeposit::truncate();
         \Solunes\Store\App\RefundItem::truncate();
         \Solunes\Store\App\Refund::truncate();
+        \Solunes\Store\App\SaleCredit::truncate();
+        \Solunes\Store\App\SaleDelivery::truncate();
+        \Solunes\Store\App\SalePayment::truncate();
         \Solunes\Store\App\SaleItem::truncate();
         \Solunes\Store\App\Sale::truncate();
+        \Solunes\Store\App\CartItem::truncate();
+        \Solunes\Store\App\Cart::truncate();
+        \Solunes\Store\App\ShippingCity::truncate();
+        \Solunes\Store\App\Shipping::truncate();
+        \Solunes\Store\App\Payment::truncate();
         // Módulo de Capital
         \Solunes\Store\App\PartnerMovement::truncate();
         //\Solunes\Store\App\PartnerDetail::truncate();
@@ -35,10 +44,14 @@ class TruncateSeeder extends Seeder {
         \Solunes\Store\App\Concept::truncate();
         // Módulo de Productos e Inventario
         \Solunes\Store\App\InventoryMovement::truncate();
+        \Solunes\Store\App\PackageProduct::truncate();
+        \Solunes\Store\App\Package::truncate();
         \Solunes\Store\App\PurchaseProduct::truncate();
         \Solunes\Store\App\Purchase::truncate();
+        \Solunes\Store\App\ProductOffer::truncate();
         \Solunes\Store\App\ProductImage::truncate();
         \Solunes\Store\App\ProductStock::truncate();
+        \Solunes\Store\App\ProductBenefit::truncate();
         \Solunes\Store\App\ProductGroup::truncate();
         \Solunes\Store\App\Product::truncate();
         \Solunes\Store\App\Category::truncate();
@@ -48,6 +61,8 @@ class TruncateSeeder extends Seeder {
         \Solunes\Store\App\Place::truncate();
         \Solunes\Store\App\Currency::truncate();
         \Solunes\Store\App\TransactionCode::truncate();
+        \Solunes\Store\App\City::truncate();
+        \Solunes\Store\App\Region::truncate();
 
     }
 }

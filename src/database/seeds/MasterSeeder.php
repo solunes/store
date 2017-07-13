@@ -15,6 +15,8 @@ class MasterSeeder extends Seeder {
     {
 
         // Módulo General de Empresa ERP
+        $node_region = \Solunes\Master\App\Node::create(['name'=>'region', 'location'=>'store', 'folder'=>'company']);
+        $node_city = \Solunes\Master\App\Node::create(['name'=>'city', 'table_name'=>'cities', 'location'=>'store', 'folder'=>'company']);
         $node_currency = \Solunes\Master\App\Node::create(['name'=>'currency', 'table_name'=>'currencies', 'location'=>'store', 'folder'=>'company']);
         $node_place = \Solunes\Master\App\Node::create(['name'=>'place', 'location'=>'store', 'folder'=>'company']);
         $node_tax = \Solunes\Master\App\Node::create(['name'=>'tax', 'table_name'=>'taxes', 'location'=>'store', 'folder'=>'company']);
@@ -34,24 +36,34 @@ class MasterSeeder extends Seeder {
         $node_category = \Solunes\Master\App\Node::create(['name'=>'category', 'table_name'=>'categories', 'multilevel'=>true, 'location'=>'store', 'folder'=>'products']);
         $node_product = \Solunes\Master\App\Node::create(['name'=>'product', 'location'=>'store', 'folder'=>'products']);
         $node_product_group = \Solunes\Master\App\Node::create(['name'=>'product-group', 'location'=>'store', 'folder'=>'products']);
-        \Solunes\Master\App\Filter::create(['node_id'=>$node_product->id, 'category'=>'admin', 'parameter'=>'category_id']);
+        $node_product_benefit = \Solunes\Master\App\Node::create(['name'=>'product-benefit', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_product->id]);
         $node_product_variation = \Solunes\Master\App\Node::create(['name'=>'product-variation', 'type'=>'field', 'model'=>'\App\Variation', 'location'=>'store', 'parent_id'=>$node_product->id]);
         $node_product_stock = \Solunes\Master\App\Node::create(['name'=>'product-stock', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_product->id]);
-        //\Solunes\Master\App\Node::create(['name'=>'product-image', 'type'=>'subchild', 'parent_id'=>$node_product->id]);
+        \Solunes\Master\App\Node::create(['name'=>'product-image', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_product->id]);
+        \Solunes\Master\App\Node::create(['name'=>'product-offer', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_product->id]);
         $node_purchase = \Solunes\Master\App\Node::create(['name'=>'purchase', 'location'=>'store', 'folder'=>'products']);
         $node_purchase_product = \Solunes\Master\App\Node::create(['name'=>'purchase-product', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_purchase->id]);
+        $node_package = \Solunes\Master\App\Node::create(['name'=>'package', 'location'=>'store', 'folder'=>'products']);
+        $node_package_product = \Solunes\Master\App\Node::create(['name'=>'package-product', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_package->id]);
         $node_inventory_movement = \Solunes\Master\App\Node::create(['name'=>'inventory-movement', 'location'=>'store', 'folder'=>'products']);
         // Módulo de Capital
         $node_partner = \Solunes\Master\App\Node::create(['name'=>'partner', 'location'=>'store', 'folder'=>'capital']);
         //$node_partner_detail = \Solunes\Master\App\Node::create(['name'=>'partner-detail', 'folder'=>'capital', 'type'=>'child', 'parent_id'=>$node_partner->id]);
         $node_partner_movement = \Solunes\Master\App\Node::create(['name'=>'partner-movement', 'folder'=>'capital', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_partner->id]);
         // Módulo de Ventas
+        $node_payment = \Solunes\Master\App\Node::create(['name'=>'payment', 'location'=>'store', 'folder'=>'company']);
+        $node_shipping = \Solunes\Master\App\Node::create(['name'=>'shipping', 'location'=>'store', 'folder'=>'company']);
+        $node_shipping_city = \Solunes\Master\App\Node::create(['name'=>'shipping-city', 'table_name'=>'shipping_cities', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_shipping->id]);
+        $node_cart = \Solunes\Master\App\Node::create(['name'=>'cart', 'location'=>'store', 'folder'=>'sales']);
+        $node_cart_item = \Solunes\Master\App\Node::create(['name'=>'cart-item', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_cart->id]);
         $node_sale = \Solunes\Master\App\Node::create(['name'=>'sale', 'location'=>'store', 'folder'=>'sales']);
-        \Solunes\Master\App\Filter::create(['node_id'=>$node_sale->id, 'category'=>'admin', 'parameter'=>'currency_id']);
-        \Solunes\Master\App\Filter::create(['node_id'=>$node_sale->id, 'category'=>'admin', 'parameter'=>'credit']);
         $node_sale_item = \Solunes\Master\App\Node::create(['name'=>'sale-item', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
+        $node_sale_payment = \Solunes\Master\App\Node::create(['name'=>'sale-payment', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
+        $node_sale_delivery = \Solunes\Master\App\Node::create(['name'=>'sale-delivery', 'table_name'=>'sale_deliveries', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
+        $node_sale_credit = \Solunes\Master\App\Node::create(['name'=>'sale-credit', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
         $node_refund = \Solunes\Master\App\Node::create(['name'=>'refund', 'location'=>'store', 'folder'=>'sales']);
         $node_refund_item = \Solunes\Master\App\Node::create(['name'=>'refund-item', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_refund->id]);
+        $node_sp_bank_deposit = \Solunes\Master\App\Node::create(['name'=>'sp-bank-deposit', 'location'=>'store', 'folder'=>'company']);
 
         // Usuarios
         $admin = \Solunes\Master\App\Role::where('name', 'admin')->first();

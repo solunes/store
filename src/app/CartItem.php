@@ -4,28 +4,32 @@ namespace Solunes\Store\App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImage extends Model {
+class CartItem extends Model {
 	
-	protected $table = 'product_images';
-	public $timestamps = false;
+	protected $table = 'cart_items';
+	public $timestamps = true;
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'parent_id'=>'required',
 		'name'=>'required',
-		'image'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
 		'id'=>'required',
-		'parent_id'=>'required',
 		'name'=>'required',
-		'image'=>'required',
 	);
-	                        
-    public function parent() {
+
+    public function product() {
         return $this->belongsTo('Solunes\Store\App\Product');
+    }
+
+    public function getTotalWeightAttribute() {
+        return round($this->weight*$this->quantity);
+    }
+
+    public function getTotalPriceAttribute() {
+        return round($this->price*$this->quantity);
     }
 
 }

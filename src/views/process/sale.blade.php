@@ -1,5 +1,5 @@
 @extends('layouts/master')
-@include('store::helpers.meta')
+@include('helpers.meta')
 
 @section('css')
 @endsection
@@ -57,15 +57,17 @@
               <tfoot>
                 <tr class="cart-subtotal">
                   <th>Subtotal</th>
-                  <td><span class="amount">Bs. {{ $sale->order_cost }}</span></td>
+                  <td><span class="amount">Bs. {{ $sale->order_amount }}</span></td>
                 </tr>
-                <tr class="cart-subtotal">
-                  <th>Costo de Envío ({{ $sale->total_weight }} kg.)</th>
-                  <td><span class="amount">Bs. {{ $sale->shipping_cost }}</span></td>
-                </tr>
+                @foreach($sale->sale_deliveries as $delivery)
+                  <tr class="cart-subtotal">
+                    <th>Costo de Envío ({{ $delivery->total_weight }} kg.)</th>
+                    <td><span class="amount">Bs. {{ $delivery->shipping_cost }}</span></td>
+                  </tr>
+                @endforeach
                 <tr class="order-total">
                   <th>Precio Total</th>
-                  <td><strong><span class="amount">Bs. {{ $sale->total_cost }}</span></strong>
+                  <td><strong><span class="amount">Bs. {{ $sale->amount }}</span></strong>
                   </td>
                 </tr>               
               </tfoot>
@@ -77,15 +79,29 @@
       </div>  
 
       <div class="col-lg-6 col-md-6">
-        <h3>{{ mb_strtoupper($payment->name, 'UTF-8') }}</h3>
-        <div class="coupon-content checkbox-form">           
-          <div class="row">
-            <div class="col-md-12">
-              {!! $payment->content !!}
+        <h1>MÉTODO DE ENVÍO</h1>
+        @foreach($sale->sale_deliveries as $delivery)
+          <h3>{{ mb_strtoupper($delivery->shipping->name, 'UTF-8') }}</h3>
+          <div class="coupon-content checkbox-form">           
+            <div class="row">
+              <div class="col-md-12">
+                {!! $delivery->shipping->content !!}
+              </div>
             </div>
           </div>
-        </div>
-        @include('includes.payment-'.$payment->code)
+        @endforeach
+        <h1>MÉTODO DE PAGO</h1>
+        @foreach($sale_payments as $payment)
+          <h3>{{ mb_strtoupper($payment->payment->name, 'UTF-8') }}</h3>
+          <div class="coupon-content checkbox-form">           
+            <div class="row">
+              <div class="col-md-12">
+                {!! $payment->payment->content !!}
+              </div>
+            </div>
+          </div>
+          @include('store::includes.payment-'.$payment->payment->code)
+        @endforeach
       </div>  
     </div>
   </div>

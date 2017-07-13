@@ -79,8 +79,24 @@ class Product extends Model {
         return $this->belongsToMany('Solunes\Store\App\Variation', 'product_variation', 'product_id', 'variation_id');
     }
 
+    public function product_benefits() {
+        return $this->hasMany('Solunes\Store\App\ProductBenefit', 'parent_id');
+    }
+
     public function product_stocks() {
         return $this->hasMany('Solunes\Store\App\ProductStock', 'parent_id');
+    }
+
+    public function product_images() {
+        return $this->hasMany('Solunes\Store\App\ProductImage', 'parent_id');
+    }
+
+    public function product_offers() {
+        return $this->hasMany('Solunes\Store\App\ProductOffer', 'parent_id');
+    }
+
+    public function product_offer() {
+        return $this->hasOne('Solunes\Store\App\ProductOffer', 'parent_id');
     }
 
     public function purchase_products() {
@@ -92,6 +108,32 @@ class Product extends Model {
             return $this->product_stocks->sum('quantity');
         } else {
             return 0;
+        }
+    }
+
+    public function getRealPriceAttribute() {
+        $price = $this->price;
+        if($offer = $this->product_offer){
+            if($offer->type=='discount_percentage'){
+                $price = $price - ($price * $offer->value / 100);
+            } else if($offer->type=='discount_value'){
+                $price = $price - $offer->value;
+            }
+        }
+        return $price;
+    }
+
+    public function getPriceLabelAttribute() {
+        $price = round($this->price, 2);
+        $real_price = round($this->real_price, 2);
+        if($price != $real_price){
+            return '<span class="old-price">ANTES A '.$price.' '.$this->currency->name.'</span><br><span class="new-price">AHORA A '.$real_price.' '.$this->currency->name.'</span>';
+        } else if($offer = $this->product_offer&&$this->product_offer->type=='discount_quantities') {
+            $return = '<span class="new-price">'.$price.' '.$this->currency->name.'</span>';
+            $return .= '<br><span class="new-price">LLEVATE '.$this->product_offer->value.'</span>';
+            return $return;
+        } else {
+            return '<span class="new-price">CÓMPRALO POR:<br>'.$price.' '.$this->currency->name.'</span>';
         }
     }
 

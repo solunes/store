@@ -14,8 +14,29 @@ class NodesStore extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('place_id')->nullable()->after('status');
+            $table->string('address_extra')->nullable()->after('username');
+            $table->string('address')->nullable()->after('username');
+            $table->integer('city_id')->nullable()->after('username');
+            $table->string('last_name')->nullable()->after('username');
+            $table->string('first_name')->nullable()->after('username');
         });
         // Módulo General de Empresa ERP
+        Schema::create('regions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->nullable();
+            $table->integer('order')->nullable()->default(0);
+            $table->boolean('active')->nullable()->default(1);
+            $table->timestamps();
+        });
+        Schema::create('cities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('region_id')->unsigned();
+            $table->string('name')->nullable();
+            $table->integer('order')->nullable()->default(0);
+            $table->boolean('active')->nullable()->default(1);
+            $table->timestamps();
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
+        });
         Schema::create('currencies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->nullable();
@@ -202,6 +223,7 @@ class NodesStore extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('product_size')->nullable(); // Retirar y cambiar por variantes
+            $table->string('image')->nullable();
             $table->boolean('printed')->nullable()->default(0);
             $table->integer('currency_id')->unsigned();
             $table->integer('partner_id')->nullable();
@@ -209,6 +231,7 @@ class NodesStore extends Migration
             $table->integer('external_currency_id')->unsigned();
             $table->decimal('currency_product_cost', 10, 2)->nullable();
             $table->decimal('currency_transport_cost', 10, 2)->nullable();
+            $table->decimal('weight', 10, 2)->nullable()->default(0);
             $table->decimal('exchange', 10, 2)->nullable();
             $table->decimal('product_cost', 10, 2)->nullable();
             $table->decimal('transport_cost', 10, 2)->nullable();
@@ -234,6 +257,12 @@ class NodesStore extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('variation_id')->references('id')->on('variations')->onDelete('cascade');
         });
+        Schema::create('product_benefits', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->string('name')->nullable();
+            $table->foreign('parent_id')->references('id')->on('products')->onDelete('cascade');
+        });
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->unsigned();
@@ -249,6 +278,14 @@ class NodesStore extends Migration
             $table->integer('parent_id')->unsigned();
             $table->string('name')->nullable();
             $table->string('image')->nullable();
+            $table->foreign('parent_id')->references('id')->on('products')->onDelete('cascade');
+        });
+        Schema::create('product_offers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->string('name')->nullable();
+            $table->enum('type', ['discount_percentage','discount_value','discount_quantities'])->nullable()->default('discount_percentage');
+            $table->string('value')->nullable();
             $table->foreign('parent_id')->references('id')->on('products')->onDelete('cascade');
         });
         Schema::create('purchases', function (Blueprint $table) {
@@ -285,6 +322,22 @@ class NodesStore extends Migration
             $table->foreign('parent_id')->references('id')->on('purchases')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
+        Schema::create('packages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->nullable();
+            $table->boolean('active')->nullable()->default(1);
+            $table->integer('currency_id')->unsigned();
+            $table->string('price')->nullable();
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
+        });
+        Schema::create('package_products', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->string('quantity')->nullable();
+            $table->foreign('parent_id')->references('id')->on('packages')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        });
         Schema::create('inventory_movements', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
@@ -297,27 +350,69 @@ class NodesStore extends Migration
             $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
         });
         /* Módulo de Ventas */
+        Schema::create('payments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('order')->nullable()->default(0);
+            $table->integer('account_id')->unsigned();
+            $table->string('code')->nullable();
+            $table->string('name')->nullable();
+            $table->boolean('active')->nullable()->default(1);
+            $table->string('accounting_detail')->nullable();
+            $table->text('content')->nullable();
+            $table->timestamps();
+            $table->boolean('online')->default(1);
+            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
+        });
+        Schema::create('shippings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('order')->nullable()->default(0);
+            $table->string('name')->nullable();
+            $table->integer('city_id')->unsigned();
+            $table->boolean('active')->nullable()->default(1);
+            $table->text('content')->nullable();
+            $table->timestamps();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+        });
+        Schema::create('shipping_cities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->integer('city_id')->unsigned();
+            $table->integer('shipping_days')->nullable();
+            $table->decimal('shipping_cost', 10, 2)->nullable();
+            $table->decimal('shipping_cost_extra', 10, 2)->nullable();
+            $table->foreign('parent_id')->references('id')->on('shippings')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+        });
+        Schema::create('carts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->nullable();
+            $table->string('session_id')->nullable();
+            $table->enum('type', ['cart','buy-now'])->default('cart');
+            $table->enum('status', ['holding','sale'])->default('holding');
+            $table->timestamps();
+        });
+        Schema::create('cart_items', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->integer('quantity');
+            $table->decimal('price', 10, 2);
+            $table->decimal('weight', 10, 2);
+            $table->timestamps();
+            $table->foreign('parent_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        });
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('place_id')->unsigned();
             $table->integer('currency_id')->unsigned();
+            $table->decimal('order_amount', 10, 2)->nullable();
             $table->decimal('amount', 10, 2)->nullable();
-            $table->decimal('cash_bob', 10, 2)->nullable();
-            $table->decimal('cash_usd', 10, 2)->nullable();
-            $table->decimal('pos_bob', 10, 2)->nullable();
-            $table->decimal('paid_amount', 10, 2)->nullable();
-            $table->decimal('change', 10, 2)->nullable();
-            $table->string('exchange')->nullable();
             $table->boolean('invoice')->nullable()->default(0);
             $table->string('invoice_name')->nullable();
             $table->string('invoice_nit')->nullable();
-            $table->enum('type', ['normal','web','online'])->nullable()->default('normal');
-            $table->decimal('shipping_cost', 10, 2)->nullable();
-            $table->boolean('credit')->nullable()->default(0);
-            $table->decimal('credit_amount', 10, 2)->nullable();
-            $table->date('credit_due')->nullable();
-            $table->string('credit_details')->nullable();
+            $table->enum('type', ['normal','online'])->nullable()->default('normal');
             $table->string('transaction_code')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -334,8 +429,50 @@ class NodesStore extends Migration
             $table->integer('quantity')->nullable();
             $table->decimal('pending', 10, 2)->nullable();
             $table->decimal('total', 10, 2);
+            $table->decimal('weight', 10, 2);
             $table->foreign('parent_id')->references('id')->on('sales')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
+        });
+        Schema::create('sale_payments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->integer('payment_id')->unsigned();
+            $table->integer('currency_id')->unsigned();
+            $table->enum('status', ['holding','paid'])->nullable()->default('holding');
+            $table->string('exchange')->nullable();
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->decimal('pending_amount', 10, 2)->default(0);
+            $table->string('detail')->nullable();
+            $table->foreign('parent_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
+        });
+        Schema::create('sale_deliveries', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->integer('shipping_id')->unsigned();
+            $table->integer('city_id')->unsigned();
+            $table->string('city_other')->nullable();
+            $table->string('name')->nullable();
+            $table->enum('status', ['holding','confirmed','paid','delivered'])->default('holding');
+            $table->string('address')->nullable();
+            $table->string('address_extra')->nullable();
+            $table->decimal('total_weight', 10, 2)->nullable();
+            $table->decimal('shipping_cost', 10, 2)->nullable();
+            $table->foreign('parent_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+        });
+        Schema::create('sale_credits', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('parent_id')->unsigned();
+            $table->integer('customer_name')->unsigned();
+            $table->date('due_date')->nullable();
+            $table->string('detail')->nullable();
+            $table->integer('currency_id')->unsigned();
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->foreign('parent_id')->references('id')->on('sales')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
         });
         Schema::create('refunds', function (Blueprint $table) {
@@ -365,6 +502,16 @@ class NodesStore extends Migration
             $table->foreign('parent_id')->references('id')->on('refunds')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
+        });
+        Schema::create('sp_bank_deposits', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('sale_id')->unsigned();
+            $table->integer('sale_payment_id')->unsigned();
+            $table->enum('status', ['holding','confirmed','denied'])->nullable()->default('holding');
+            $table->string('image')->nullable();
+            $table->text('observations')->nullable();
+            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreign('sale_payment_id')->references('id')->on('sale_payments')->onDelete('cascade');
         });
         /* Módulo de Capital */
         Schema::create('partners', function (Blueprint $table) {
@@ -424,16 +571,29 @@ class NodesStore extends Migration
         Schema::dropIfExists('partner_details');
         Schema::dropIfExists('partners');
         // Módulo de Ventas
+        Schema::dropIfExists('sp_bank_deposits');
         Schema::dropIfExists('refund_items');
         Schema::dropIfExists('refunds');
+        Schema::dropIfExists('sale_credits');
+        Schema::dropIfExists('sale_deliveries');
+        Schema::dropIfExists('sale_payments');
         Schema::dropIfExists('sale_items');
         Schema::dropIfExists('sales');
+        Schema::dropIfExists('cart_items');
+        Schema::dropIfExists('carts');
+        Schema::dropIfExists('shipping_cities');
+        Schema::dropIfExists('shippings');
+        Schema::dropIfExists('payments');
         // Módulo de Productos e Inventario
         Schema::dropIfExists('inventory_movements');
+        Schema::dropIfExists('package_products');
+        Schema::dropIfExists('packages');
         Schema::dropIfExists('purchase_products');
         Schema::dropIfExists('purchases');
+        Schema::dropIfExists('product_offers');
         Schema::dropIfExists('product_images');
         Schema::dropIfExists('product_stocks');
+        Schema::dropIfExists('product_benefits');
         Schema::dropIfExists('product_variation');
         Schema::dropIfExists('product_groups');
         Schema::dropIfExists('products');
@@ -454,5 +614,7 @@ class NodesStore extends Migration
         Schema::dropIfExists('taxes');
         Schema::dropIfExists('places');
         Schema::dropIfExists('currencies');
+        Schema::dropIfExists('cities');
+        Schema::dropIfExists('regions');
     }
 }

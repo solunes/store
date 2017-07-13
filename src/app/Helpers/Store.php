@@ -300,6 +300,35 @@ class Store {
         return $array;
     }
 
+    public static function calculate_shipping_cost($shipping_id, $city_id, $weight) {
+        $shipping = \Solunes\Store\App\Shipping::find($shipping_id);
+        $shipping_city = $shipping->shipping_cities()->where('city_id', $city_id)->first();
+        if($shipping_city){
+            $shipping_cost = $shipping_city->shipping_cost;
+            $weight = $weight-1;
+            if($weight>0){
+                $shipping_cost += ceil($weight)*$shipping_city->shipping_cost_extra;
+            }
+            return ['shipping'=>true, 'shipping_cost'=>$shipping_cost];
+        } else {
+            $new_shipping_id = 2;
+            return ['shipping'=>false, 'shipping_cost'=>0, 'new_shipping_id'=>$new_shipping_id];
+        }
+    }
+
+    public static function create_sale_payment($payment, $sale, $amount, $detail) {
+        $sale_payment = new \Solunes\Store\App\SalePayment;
+        $sale_payment->parent_id = $sale->id;
+        $sale_payment->payment_id = $payment->id;
+        $sale_payment->currency_id = $sale->currency_id;
+        $sale_payment->exchange = $sale->exchange;
+        $sale_payment->amount = $amount;
+        $sale_payment->pending_amount = $amount;
+        $sale_payment->detail = $detail;
+        $sale_payment->save();
+        return $sale_payment;
+    }
+
     public static function check_report_view($view, $array) {
         if(request()->has('download-pdf')){
             $array['pdf'] = true;

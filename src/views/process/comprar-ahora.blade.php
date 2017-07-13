@@ -1,5 +1,5 @@
 @extends('layouts/master')
-@include('store::helpers.meta')
+@include('helpers.meta')
 
 @section('css')
 @endsection
@@ -43,7 +43,7 @@
                   {!! Asset::get_image('product-image', 'subdetail', $product->image) !!}
                 </a></td>
                 <td class="product-name"><a target="_blank" href="{{ url('product/'.$product->slug) }}">{{ $product->name }}</a></td>
-                <td class="product-price"><span class="amount">Bs. {{ $product->price }}</span></td>
+                <td class="product-price"><span class="amount">Bs. {{ $product->real_price }}</span></td>
                 <td class="product-quantity">
                   <input name="quantity" type="number" value="1">
                   <input name="product_id" type="hidden" value="{{ $product->id }}">

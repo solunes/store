@@ -187,6 +187,15 @@ class CustomStore {
         return $return;
     }
 
+    public static function after_login($user, $last_session, $redirect) {
+        if($cart = \Solunes\Store\App\Cart::where('session_id', $last_session)->checkCart()->first()){
+            $cart->session_id = session()->getId();
+            $cart->user_id = $user->id;
+            $cart->save();
+        }
+        return true;
+    }
+    
     public static function check_permission($type, $module, $node, $action, $id = NULL) {
         // Type = list, item
         $return = 'none';

@@ -51,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes(Router $router)
     {
         $router->group(['namespace' => $this->storeNamespace, 'middleware' => 'admin'], function ($router) {
-            require __DIR__ . '/../Routes/routes.php';
+            require __DIR__ . '/../Routes/admin.php';
         });
         parent::mapAdminRoutes($router);
     }
@@ -66,6 +66,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(Router $router)
     {
+        $router->group(['namespace' => $this->storeNamespace, 'middleware' => 'web'], function ($router) {
+            require __DIR__ . '/../Routes/routes.php';
+        });
         parent::mapWebRoutes($router);
     }
 

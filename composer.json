@@ -19,8 +19,9 @@
         "classmap": [
             "src/database/migrations",
             "src/app/Providers",
-            "src/app/Controllers"
-        ],
+            "src/app/Controllers",
+            "src/app/Console"
+       ],
         "psr-4": {
             "Solunes\\Store\\": "src/"
         }

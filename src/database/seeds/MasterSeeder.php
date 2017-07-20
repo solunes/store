@@ -58,9 +58,9 @@ class MasterSeeder extends Seeder {
         $node_cart_item = \Solunes\Master\App\Node::create(['name'=>'cart-item', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_cart->id]);
         $node_sale = \Solunes\Master\App\Node::create(['name'=>'sale', 'location'=>'store', 'folder'=>'sales']);
         $node_sale_item = \Solunes\Master\App\Node::create(['name'=>'sale-item', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
-        $node_sale_payment = \Solunes\Master\App\Node::create(['name'=>'sale-payment', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
-        $node_sale_delivery = \Solunes\Master\App\Node::create(['name'=>'sale-delivery', 'table_name'=>'sale_deliveries', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
-        $node_sale_credit = \Solunes\Master\App\Node::create(['name'=>'sale-credit', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_sale->id]);
+        $node_sale_payment = \Solunes\Master\App\Node::create(['name'=>'sale-payment', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_sale->id]);
+        $node_sale_delivery = \Solunes\Master\App\Node::create(['name'=>'sale-delivery', 'table_name'=>'sale_deliveries', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_sale->id]);
+        $node_sale_credit = \Solunes\Master\App\Node::create(['name'=>'sale-credit', 'type'=>'child', 'location'=>'store', 'parent_id'=>$node_sale->id]);
         $node_refund = \Solunes\Master\App\Node::create(['name'=>'refund', 'location'=>'store', 'folder'=>'sales']);
         $node_refund_item = \Solunes\Master\App\Node::create(['name'=>'refund-item', 'type'=>'subchild', 'location'=>'store', 'parent_id'=>$node_refund->id]);
         $node_sp_bank_deposit = \Solunes\Master\App\Node::create(['name'=>'sp-bank-deposit', 'location'=>'store', 'folder'=>'company']);

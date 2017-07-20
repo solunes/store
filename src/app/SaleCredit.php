@@ -11,18 +11,18 @@ class SaleCredit extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'product_id'=>'required',
+		'due_date'=>'required',
+		'detail'=>'required',
 		'currency_id'=>'required',
-		'quantity'=>'required',
-		'price'=>'required',
+		'amount'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
-		'product_id'=>'required',
+		'due_date'=>'required',
+		'detail'=>'required',
 		'currency_id'=>'required',
-		'quantity'=>'required',
-		'price'=>'required',
+		'amount'=>'required',
 	);
 
     public function parent() {
@@ -31,14 +31,6 @@ class SaleCredit extends Model {
 
     public function currency() {
         return $this->belongsTo('Solunes\Store\App\Currency');
-    }
-
-    public function product() {
-        return $this->belongsTo('Solunes\Store\App\Product');
-    }
-
-    public function getTotalPriceAttribute() {
-        return round($this->price*$this->quantity);
     }
 
 }

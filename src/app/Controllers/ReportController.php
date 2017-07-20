@@ -21,7 +21,7 @@ class ReportController extends Controller {
 	}
 
   public function getSalesReport() {
-    $model = \Solunes\Store\App\Sale::whereNotNull('id');
+    $model = \Solunes\Store\App\Sale::where('status','!=','holding');
     $array = \Store::check_report_header($model);
     $array['show_place'] = true;
 
@@ -51,7 +51,7 @@ class ReportController extends Controller {
         $store += $new_total;
         $sales_total += $new_total;
         foreach($item->other_accounts as $other){
-          $other_amount = \Func::calculate_currency($other->real_amount, $array['currency'], $currency);
+          $other_amount = \Store::calculate_currency($other->real_amount, $array['currency'], $currency);
           if($other->account->concept->code=='asset_cash'){
             $cash += $other_amount;
           } else if($other->account->concept->code=='asset_bank'){
@@ -83,11 +83,11 @@ class ReportController extends Controller {
   }
 
   public function getSalesDetailReport() {
-    $model = \Solunes\Store\App\Sale::whereNotNull('id');
+    $model = \Solunes\Store\App\Sale::where('status','!=','holding');
     $array = \Store::check_report_header($model, ['web'=>'Web', 'online'=>'Online', 'pos'=>'POS']);
     $array['show_place'] = true;
 
-    $sales = \Solunes\Store\App\Sale::where('created_at', '>=', $array['i_date'])->where('created_at', '<=', $array['e_date']);
+    $sales = \Solunes\Store\App\Sale::where('status','!=','holding')->where('created_at', '>=', $array['i_date'])->where('created_at', '<=', $array['e_date']);
     if($array['place']!='all'){
       if($array['place']=='web'){
         $sales = $sales->where('type', 'web');
@@ -361,11 +361,11 @@ class ReportController extends Controller {
         foreach($items as $key => $item){
           if($key==0){
             $amount = $item->balance;
+            $amount = \Store::calculate_currency($amount, $array['currency'], $item->currency);
           } else {
             $amount = $item->real_amount;
           }
-          $new_amount = \Store::calculate_currency($amount, $array['currency'], $item->currency);
-          $total += $new_amount;
+          $total += $amount;
         }
         if($concept->type!='asset'){
           $total = -$total;
@@ -378,7 +378,7 @@ class ReportController extends Controller {
         }
       }
     }
-    $array_items['equity']['Capital']['Utilidad de Gestión'] = $total_profit;
+    $array_items['equity']['Capital']['Utilidad de la Gestión'] = $total_profit;
     $array['items'] = $array_items;
     // Gráficos
     /*$type_items = [['type'=>'income','total'=>round(100)], ['type'=>'expense','total'=>round(200)]];

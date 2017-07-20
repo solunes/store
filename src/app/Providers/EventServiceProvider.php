@@ -45,7 +45,9 @@ class EventServiceProvider extends ServiceProvider
         $events->listen('eloquent.saving: Solunes\Store\App\PartnerDetail', '\Solunes\Store\App\Listeners\SavePartnerDetail');
         // Módulo de Ventas
         $events->listen('eloquent.creating: Solunes\Store\App\Sale', '\Solunes\Store\App\Listeners\RegisteringSale');
-        $events->listen('eloquent.created: Solunes\Store\App\Sale', '\Solunes\Store\App\Listeners\RegisterSale');
+        $events->listen('eloquent.saving: Solunes\Store\App\Sale', '\Solunes\Store\App\Listeners\SavingSale');
+        $events->listen('eloquent.created: Solunes\Store\App\SaleCredit', '\Solunes\Store\App\Listeners\RegisterSaleCredit');
+        $events->listen('eloquent.saving: Solunes\Store\App\SalePayment', '\Solunes\Store\App\Listeners\SavingSalePayment');
         $events->listen('eloquent.created: Solunes\Store\App\SaleItem', '\Solunes\Store\App\Listeners\RegisterSaleItem');
         $events->listen('eloquent.created: Solunes\Store\App\Refund', '\Solunes\Store\App\Listeners\RegisterRefund');
         $events->listen('eloquent.created: Solunes\Store\App\RefundItem', '\Solunes\Store\App\Listeners\RegisterRefundItem');

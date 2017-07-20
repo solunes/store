@@ -15,6 +15,19 @@ class Sale extends Model {
         //'product_id'=>'required',
     );
 
+    /* Sending rules */
+    public static $rules_send = array(
+        'city_id'=>'required',
+        'first_name'=>'required',
+        'last_name'=>'required',
+        'address'=>'required',
+        'email'=>'required',
+        'cellphone'=>'required',
+        'shipping_id'=>'required',
+        'payment_id'=>'required',
+        'password'=>'required',
+    );
+
     /* Sending auth rules */
     public static $rules_auth_send = array(
         'city_id'=>'required',
@@ -28,9 +41,8 @@ class Sale extends Model {
         'currency_id'=>'required',
         'place_id'=>'required',
         'type'=>'required',
+        'status'=>'required',
         'invoice'=>'required',
-        'credit'=>'required',
-        'online_sale'=>'required',
 	);
 
 	/* Updating rules */
@@ -39,9 +51,8 @@ class Sale extends Model {
         'currency_id'=>'required',
         'place_id'=>'required',
         'type'=>'required',
+        'status'=>'required',
         'invoice'=>'required',
-        'credit'=>'required',
-        'online_sale'=>'required',
 	);
       
     public function scopeFindId($query, $id) {
@@ -83,6 +94,10 @@ class Sale extends Model {
         
     public function sale_payments() {
         return $this->hasMany('Solunes\Store\App\SalePayment', 'parent_id');
+    }
+
+    public function sale_credits() {
+        return $this->hasMany('Solunes\Store\App\SaleCredit', 'parent_id');
     }
 
     public function sale_deliveries() {

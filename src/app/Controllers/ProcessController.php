@@ -233,6 +233,7 @@ class ProcessController extends Controller {
       $sale_delivery = new \Solunes\Store\App\SaleDelivery;
       $sale_delivery->parent_id = $sale->id;
       $sale_delivery->shipping_id = $request->input('shipping_id');
+      $sale_delivery->currency_id = $sale->currency_id;
       $sale_delivery->city_id = $request->input('city_id');
       if($request->has('city_other')){
         $sale_delivery->city_other = $request->input('city_other');

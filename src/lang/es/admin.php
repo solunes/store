@@ -13,6 +13,7 @@ return array(
 	"sales" => "Ventas",
 
 	// CUSTOM TRANS
+	"accounted" => "Contabilizado",
 	"asset" => "Activo",
 	"liability" => "Pasivo",
 	"equity" => "Patrimonio",
@@ -26,6 +27,7 @@ return array(
 	'customer' => 'Cliente',
 	'debit' => 'Débito',
 	'delivered' => 'Enviado',
+	'denied' => 'Denegado',
 	'discount_percentage' => 'Porcentaje de Descuento',
 	'discount_quantities' => 'Oferta de Cantidades',
 	'discount_value' => 'Monto de Descuento',

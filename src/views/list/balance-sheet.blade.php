@@ -7,7 +7,7 @@
 
   @if(count($items)>0)
     @foreach($items as $type => $item)
-      <h3>{{ trans('master::admin.'.$type) }}</h3>
+      <h3>{{ trans('store::admin.'.$type) }}</h3>
       <table class="table table-striped table-bordered table-hover dt-responsive">
         <thead>
           <tr class="title">
@@ -36,7 +36,7 @@
               <?php $total += $subtotal; ?>
           @endforeach
           <tr class="title">
-            <td>TOTAL DE {{ trans('master::admin.'.$type) }}</td>
+            <td>TOTAL DE {{ trans('store::admin.'.$type) }}</td>
             <td>{{ $total.' '.$currency->name }}</td>
           </tr>
         </tbody>

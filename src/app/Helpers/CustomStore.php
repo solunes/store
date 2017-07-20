@@ -25,6 +25,9 @@ class CustomStore {
         $node_array['partner'] = ['action_field'=>['edit']];
         $node_array['partner-movement'] = ['action_field'=>['view']];
         $node_array['sale'] = ['action_field'=>['view'], 'action_node'=>['back','excel']];
+        $node_array['sale-payment'] = ['action_field'=>['view','edit']];
+        $node_array['sale-delivery'] = ['action_field'=>['view','edit']];
+        $node_array['sale-credit'] = ['action_field'=>['view','edit']];
         foreach($node_array as $node_name => $node_detail){
             $node = \Solunes\Master\App\Node::where('name', $node_name)->first();
             foreach($node_detail as $extra_type => $extra_value) {

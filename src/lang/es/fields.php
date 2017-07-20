@@ -141,6 +141,7 @@ return [
     'sale' => 'Venta',
     'sale_credits' => 'Créditos de Venta',
     'sale_deliveries' => 'Envíos de Venta',
+    'sale_payment' => 'Pago de Venta',
     'sale_payments' => 'Pagos de Venta',
     'sale_item' => 'Detalle de Venta',
     'sale_items' => 'Detalles de Venta',

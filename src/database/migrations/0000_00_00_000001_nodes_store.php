@@ -409,6 +409,9 @@ class NodesStore extends Migration
             $table->integer('currency_id')->unsigned();
             $table->decimal('order_amount', 10, 2)->nullable();
             $table->decimal('amount', 10, 2)->nullable();
+            $table->decimal('paid_amount', 10, 2)->nullable();
+            $table->decimal('change', 10, 2)->nullable()->default(0);
+            $table->enum('status', ['holding','paid','accounted'])->nullable()->default('holding');
             $table->boolean('invoice')->nullable()->default(0);
             $table->string('invoice_name')->nullable();
             $table->string('invoice_nit')->nullable();
@@ -439,11 +442,11 @@ class NodesStore extends Migration
             $table->integer('parent_id')->unsigned();
             $table->integer('payment_id')->unsigned();
             $table->integer('currency_id')->unsigned();
-            $table->enum('status', ['holding','paid'])->nullable()->default('holding');
-            $table->string('exchange')->nullable();
             $table->decimal('amount', 10, 2)->default(0);
             $table->decimal('pending_amount', 10, 2)->default(0);
+            $table->enum('status', ['holding','paid','accounted'])->nullable()->default('holding');
             $table->string('detail')->nullable();
+            $table->string('exchange')->nullable();
             $table->foreign('parent_id')->references('id')->on('sales')->onDelete('cascade');
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
@@ -452,6 +455,7 @@ class NodesStore extends Migration
             $table->increments('id');
             $table->integer('parent_id')->unsigned();
             $table->integer('shipping_id')->unsigned();
+            $table->integer('currency_id')->unsigned();
             $table->integer('city_id')->unsigned();
             $table->string('city_other')->nullable();
             $table->string('name')->nullable();
@@ -462,12 +466,12 @@ class NodesStore extends Migration
             $table->decimal('shipping_cost', 10, 2)->nullable();
             $table->foreign('parent_id')->references('id')->on('sales')->onDelete('cascade');
             $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('cascade');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
         Schema::create('sale_credits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->unsigned();
-            $table->integer('customer_name')->unsigned();
             $table->date('due_date')->nullable();
             $table->string('detail')->nullable();
             $table->integer('currency_id')->unsigned();

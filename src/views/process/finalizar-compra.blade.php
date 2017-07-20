@@ -125,8 +125,8 @@
           <div class="coupon-content">
             <div class="coupon-info">
               <p class="coupon-text">Si ya tiene una cuenta de usuario, inicie sesión con su usuario y contraseña. Si no recuerda su contraseña, puede <a href="{{ url('') }}">recuperarla aquí</a>.</p>
+              <?php request()->session()->put('url.intended', request()->url()); ?>
               <form action="{{ url('auth/login') }}" method="post">
-                <?php request()->session()->put('url.intended', request()->url()); ?>
                 <p class="form-row-first">
                   <label>Email o Celular <span class="required">*</span></label>
                   {!! Form::text('user', NULL) !!}

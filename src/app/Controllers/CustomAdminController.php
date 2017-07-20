@@ -303,26 +303,53 @@ class CustomAdminController extends Controller {
 		$item->user_id = auth()->user()->id;
 		$item->place_id = $request->input('place_id');
 		$item->currency_id = 1;
+		$item->order_amount = $request->input('amount');
 		$item->amount = $request->input('amount');
 		$item->change = $request->input('change');
-		$item->cash_bob = $request->input('cash_bob');
-		$item->cash_usd = $request->input('cash_usd');
-		$item->pos_bob = $request->input('pos_bob');
 		$item->paid_amount = $request->input('paid_amount');
 		$item->invoice = $request->input('invoice');
 		$item->invoice_name = $request->input('invoice_name');
 		$item->invoice_nit = $request->input('invoice_nit');
 		$item->type = $request->input('type');
-		$item->exchange = $request->input('exchange');
-		$item->shipping_cost = $request->input('shipping_cost');
-		$item->credit = $request->input('credit');
-		if($item->credit){
-			$item->credit_amount = $request->input('credit_amount');
-			$item->credit_due = $request->input('credit_due');
-			$item->credit_details = $request->input('credit_details');
+		$item->status = 'paid';
+		$item->save();
+
+		// Crear pagos de venta
+		if($request->input('cash_bob')){
+			$detail = 'Cobro en efectivo (BOB) realizado en tienda';
+			\Store::register_sale_payment($item, 1, 1, 'paid', $request->input('cash_bob'), $detail);
+		}
+		if($request->input('cash_usd')){
+			$detail = 'Cobro en efectivo (USD) realizado en tienda';
+			\Store::register_sale_payment($item, 1, 2, 'paid', $request->input('cash_usd'), $detail, $request->input('exchange'));
+		}
+		if($request->input('pos_bob')){
+			$detail = 'Cobro en POS (BOB) realizado en tienda';
+			\Store::register_sale_payment($item, 2, 1, 'paid', $request->input('pos_bob'), $detail);
+		}
+
+		// Crear Envío en Pedido
+		/*if($request->input('shipping_cost')>0){
+			$sale_delivery = new \Solunes\Store\App\SaleDelivery;
+			$sale_delivery->parent_id = $item->id;
+			$sale_delivery->shipping_id = $request->input('shipping_id');
+			$sale_delivery->detail = $request->input('credit_details');
+			$sale_delivery->currency_id = 1;
+			$sale_delivery->amount = $request->input('credit_amount');
+			$sale_delivery->save();
+		}*/
+
+		// Crear Venta a Crédito
+		if($request->input('credit')){
+			$credit = new \Solunes\Store\App\SaleCredit;
+			$credit->parent_id = $item->id;
+			$credit->due_date = $request->input('credit_due');
+			$credit->detail = $request->input('credit_details');
+			$credit->currency_id = 1;
+			$credit->amount = $request->input('credit_amount');
+			$credit->save();
 			$credit_percentage = $request->input('amount') / $request->input('credit_amount');
 		}
-		$item->save();
 
 		$total_count = count($request->input('product_id'));
 		$count = 0;

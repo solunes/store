@@ -52,12 +52,16 @@
       {!! Field::form_input($i, $dt, ['name'=>'cash_usd', 'required'=>true, 'type'=>'string'], ['value'=>0, 'label'=>'Monto Pagado en USD', 'cols'=>3]) !!}
       <div class="col-sm-1 hidden-xs icon"><i class="fa fa-credit-card"></i></div>
       {!! Field::form_input($i, $dt, ['name'=>'pos_bob', 'required'=>true, 'type'=>'string'], ['value'=>0, 'label'=>'Monto Pagado en Bs. por POS', 'cols'=>3]) !!}
+    </div>
+    <div class="row">
       <div class="col-sm-1 hidden-xs icon"><i class="fa fa-calculator"></i></div>
       {!! Field::form_input($i, $dt, ['name'=>'paid_amount', 'required'=>true, 'type'=>'string'], ['value'=>0, 'label'=>'Monto Total Pagado en Bs.', 'cols'=>3], ['readonly'=>true]) !!}
       <div class="col-sm-1 hidden-xs icon"><i class="fa fa-balance-scale"></i></div>
       {!! Field::form_input($i, $dt, ['name'=>'change', 'required'=>true, 'type'=>'string'], ['value'=>0, 'label'=>'Cambio a Devolver en Bs.', 'cols'=>3], ['readonly'=>true]) !!}
       <div class="col-sm-1 hidden-xs icon"><i class="fa fa-dollar"></i></div>
       {!! Field::form_input($i, $dt, ['name'=>'exchange', 'required'=>true, 'type'=>'string'], ['value'=>round($currency_dollar->main_exchange, 2), 'label'=>'Tipo de Cambio de USD', 'cols'=>3]) !!}
+    </div>
+    <div class="row">
       <div class="col-sm-1 hidden-xs icon"><i class="fa fa-building"></i></div>
       {!! Field::form_input($i, $dt, ['name'=>'place_id', 'required'=>true, 'type'=>'select', 'options'=>$places], ['label'=>'Seleccione la Tienda', 'cols'=>3]) !!}
       <div class="col-sm-1 hidden-xs icon"><i class="fa fa-tags"></i></div>

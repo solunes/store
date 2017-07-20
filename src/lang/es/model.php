@@ -44,6 +44,7 @@ return [
     'refund-item' => 'Item de Devolución|Items de Devolución',
     'shipping' => 'Envío|Envíos',
     'shipping-city' => 'Envío por Ciudad|Envíos por Ciudad',
+    'sp-bank-deposit' => 'Pago por Depósito Bancario|Pagos por Depósito Bancario',
     // Módulo de Capital
     'partner' => 'Socio|Socios',
     'partner-detail' => 'Detalle de Socio|Detalles de Socios',

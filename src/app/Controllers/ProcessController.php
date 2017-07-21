@@ -61,7 +61,11 @@ class ProcessController extends Controller {
   public function getCheckCart($type) {
     if($cart = \Solunes\Store\App\Cart::checkOwner()->checkCart()->status('holding')->first()){
       $page = \Solunes\Master\App\Page::find(2);
-      return view('store::process.confirmar-compra', ['cart'=>$cart, 'page'=>$page]);
+      $view = 'process.confirmar-compra';
+      if(!view()->exists($view)){
+        $view = 'store::'.$view;
+      }
+      return view($view, ['cart'=>$cart, 'page'=>$page]);
     } else {
       return redirect('')->with('message_error', 'No se encontró un carro de compras abierto en su sesión.');
     }
@@ -87,7 +91,11 @@ class ProcessController extends Controller {
   public function getBuyNow($slug) {
     if($item = \Solunes\Store\App\Product::findBySlug($slug)){
       $page = \Solunes\Master\App\Page::find(2);
-      return view('store::process.comprar-ahora', ['product'=>$item, 'page'=>$page]);
+      $view = 'process.comprar-compra';
+      if(!view()->exists($view)){
+        $view = 'store::'.$view;
+      }
+      return view($view, ['product'=>$item, 'page'=>$page]);
     } else {
       return redirect('')->with('message_error', 'No se encuentra el producto para ser comprado.');
     }
@@ -142,7 +150,11 @@ class ProcessController extends Controller {
       $array['payment_options'] = \Solunes\Store\App\Payment::active()->order()->lists('name','id');
       $array['payment_descriptions'] = \Solunes\Store\App\Payment::active()->order()->get();
       $array['page'] = \Solunes\Master\App\Page::find(2);
-      return view('store::process.finalizar-compra', $array);
+      $view = 'process.finalizar-compra';
+      if(!view()->exists($view)){
+        $view = 'store::'.$view;
+      }
+      return view($view, $array);
     } else {
       return redirect('')->with('message_error', 'No se encuentra el producto para ser comprado.');
     }
@@ -270,7 +282,11 @@ class ProcessController extends Controller {
       $array['page'] = \Solunes\Master\App\Page::find(2);
       $array['sale'] = $sale;
       $array['sale_payments'] = $sale->sale_payments;
-      return view('store::process.sale', $array);
+      $view = 'process.sale';
+      if(!view()->exists($view)){
+        $view = 'store::'.$view;
+      }
+      return view($view, $array);
     } else {
       return redirect($this->prev)->with('message_error', 'Hubo un error al encontrar su compra.');
     }

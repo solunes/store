@@ -27,6 +27,16 @@ class ProcessController extends Controller {
     return $shipping_array;
   }
 
+  public function getAddCartItem($product_id) {
+    if($product = \Solunes\Store\App\Product::find($product_id)){
+      $cart = \Store::get_cart();
+      \Store::add_cart_item($cart, $product, 1);
+      return redirect($this->prev)->with('message_success', 'Se añadió su producto al carro de compras.');
+    } else {
+      return redirect($this->prev)->with('message_error', 'Debe seleccionar un producto existente.');
+    }
+  }
+
   public function getDeleteCartItem($cart_item_id) {
     if($cart_item = \Solunes\Store\App\CartItem::find($cart_item_id)){
       $cart_item->delete();
@@ -37,29 +47,8 @@ class ProcessController extends Controller {
   public function postAddCartItem(Request $request) {
     if($product = \Solunes\Store\App\Product::find($request->input('product_id'))){
       if($request->input('quantity')>0){
-        $cart_item = NULL;
-        if($cart = \Solunes\Store\App\Cart::checkOwner()->checkCart()->status('holding')->with('cart_items','cart_items.product')->first()){
-          $cart->touch();
-          $cart_item = $cart->cart_items->where('product_id', $product->id)->first();
-        } else {
-          $cart = new \Solunes\Store\App\Cart;
-          if(\Auth::check()){
-            $cart->user_id = \Auth::user()->id;
-          }
-          $cart->session_id = \Session::getId();
-          $cart->save();
-        }
-        if($cart_item){
-          $cart_item->quantity = $cart_item->quantity + $request->input('quantity');
-        } else {
-          $cart_item = new \Solunes\Store\App\CartItem;
-          $cart_item->parent_id = $cart->id;
-          $cart_item->product_id = $product->id;
-          $cart_item->quantity = $request->input('quantity');
-        }
-        $cart_item->price = $product->real_price;
-        $cart_item->weight = $product->weight;
-        $cart_item->save();
+        $cart = \Store::get_cart();
+        \Store::add_cart_item($cart, $product, $request->input('quantity'));
         return redirect($this->prev)->with('message_success', 'Se añadió su producto al carro de compras.');
       } else {
         return redirect($this->prev)->with('message_error', 'Debe seleccionar una cantidad positiva.');

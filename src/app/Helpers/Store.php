@@ -6,6 +6,35 @@ use Validator;
 
 class Store {
 
+    public static function get_cart() {
+        if($cart = \Solunes\Store\App\Cart::checkOwner()->checkCart()->status('holding')->with('cart_items','cart_items.product')->first()){
+          $cart->touch();
+        } else {
+          $cart = new \Solunes\Store\App\Cart;
+          if(\Auth::check()){
+            $cart->user_id = \Auth::user()->id;
+          }
+          $cart->session_id = \Session::getId();
+          $cart->save();
+        }
+        return $cart;
+    }
+
+    public static function add_cart_item($cart, $product, $quantity) {
+        if($cart_item = $cart->cart_items->where('product_id', $product->id)->first()){
+          $cart_item->quantity = $cart_item->quantity + $quantity;
+        } else {
+          $cart_item = new \Solunes\Store\App\CartItem;
+          $cart_item->parent_id = $cart->id;
+          $cart_item->product_id = $product->id;
+          $cart_item->quantity = $quantity;
+        }
+        $cart_item->price = $product->real_price;
+        $cart_item->weight = $product->weight;
+        $cart_item->save();
+        return $cart_item;
+    }
+
     public static function check_category_children($category, $category_array = []) {
         $category_array[] = $category->id;
         if(count($category->children)>0){

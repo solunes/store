@@ -13,6 +13,7 @@
 
 Route::group(['prefix'=>'process'], function(){
     Route::get('/calculate-shipping/{shipping_id}/{city_id}/{weight}', 'ProcessController@getCalculateShipping');
+    Route::get('/add-cart-item/{id}', 'ProcessController@getAddCartItem');
     Route::get('/delete-cart-item/{id}', 'ProcessController@getDeleteCartItem');
     Route::post('/add-cart-item', 'ProcessController@postAddCartItem');
     Route::get('/confirmar-compra/{type}', 'ProcessController@getCheckCart');

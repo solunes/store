@@ -12,7 +12,6 @@ class SpBankDeposit extends Model {
     /* Creating rules */
     public static $rules_send = array(
         'sale_id'=>'required',
-        'status'=>'required',
         'image'=>'required',
     );
 

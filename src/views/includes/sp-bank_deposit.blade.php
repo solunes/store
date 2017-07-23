@@ -1,4 +1,4 @@
-{!! Form::open(['url'=>'process/payment-receipt', 'method'=>'post', 'files'=>true]) !!}
+{!! Form::open(['url'=>'process/sp-bank-deposit', 'method'=>'post', 'files'=>true]) !!}
   <h3>CONFIRMAR PAGO</h3>
   <div class="coupon-content checkbox-form">           
     <div class="row">

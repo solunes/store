@@ -65,7 +65,11 @@ class ProcessController extends Controller {
       if(!view()->exists($view)){
         $view = 'store::'.$view;
       }
-      return view($view, ['cart'=>$cart, 'page'=>$page]);
+      $total = 0;
+      foreach($cart->cart_items as $cart_item){
+        $total += $cart_item->total_price;
+      }
+      return view($view, ['cart'=>$cart, 'page'=>$page, 'total'=>$total]);
     } else {
       return redirect('')->with('message_error', 'No se encontró un carro de compras abierto en su sesión.');
     }
@@ -91,7 +95,7 @@ class ProcessController extends Controller {
   public function getBuyNow($slug) {
     if($item = \Solunes\Store\App\Product::findBySlug($slug)){
       $page = \Solunes\Master\App\Page::find(2);
-      $view = 'process.comprar-compra';
+      $view = 'process.comprar-ahora';
       if(!view()->exists($view)){
         $view = 'store::'.$view;
       }
@@ -150,6 +154,14 @@ class ProcessController extends Controller {
       $array['payment_options'] = \Solunes\Store\App\Payment::active()->order()->lists('name','id');
       $array['payment_descriptions'] = \Solunes\Store\App\Payment::active()->order()->get();
       $array['page'] = \Solunes\Master\App\Page::find(2);
+      $total = 0;
+      $weight = 0;
+      foreach($cart->cart_items as $cart_item){
+        $total += $cart_item->total_price;
+        $weight += $cart_item->total_weight;
+      }
+      $array['total'] = $total;
+      $array['weight'] = $weight;
       $view = 'process.finalizar-compra';
       if(!view()->exists($view)){
         $view = 'store::'.$view;
@@ -292,20 +304,21 @@ class ProcessController extends Controller {
     }
   }
 
-  public function postPaymentReceipt(Request $request) {
+  public function postSpBankDeposit(Request $request) {
     $sale_id = $request->input('sale_id');
-    $validator = \Validator::make($request->all(), \Solunes\Store\App\PaymentReceipt::$rules_send);
+    $validator = \Validator::make($request->all(), \Solunes\Store\App\SpBankDeposit::$rules_send);
     if(!$validator->passes()){
       return redirect($this->prev)->with('message_error', 'Debe llenar todos los campos obligatorios.')->withErrors($validator)->withInput();
     } else if($sale_id&&$sale = \Solunes\Store\App\Sale::findId($sale_id)->checkOwner()->status('holding')->first()){
       if(count($sale->payment_receipts)>0){
         $payment_receipt = $sale->payment_receipts->first();
       } else {
-        $payment_receipt = new \Solunes\Store\App\PaymentReceipt;
+        $payment_receipt = new \Solunes\Store\App\SpBankDeposit;
         $payment_receipt->sale_id = $sale->id;
+        $payment_receipt->sale_payment_id = $sale->sale_payments()->first()->id;
         $payment_receipt->status = 'holding';
       }
-      $payment_receipt->image = \Asset::upload_image($request->file('image'), 'payment-receipt-image');
+      $payment_receipt->image = \Asset::upload_image($request->file('image'), 'sp-bank-deposit-image');
       $payment_receipt->save();
 
       return redirect($this->prev)->with('message_success', 'Su pago fue recibido, sin embargo aún debe ser confirmado por nuestros administradores.');

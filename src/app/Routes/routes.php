@@ -23,7 +23,7 @@ Route::group(['prefix'=>'process'], function(){
     Route::get('/finalizar-compra/{cart_id?}', 'ProcessController@getFinishSale');
     Route::post('/finish-sale', 'ProcessController@postFinishSale');
     Route::get('/sale/{id}', 'ProcessController@getSale')->middleware('auth');
-    Route::post('/payment-receipt', 'ProcessController@postPaymentReceipt');
+    Route::post('/sp-bank-deposit', 'ProcessController@postSpBankDeposit');
 });
 
 Route::group(['prefix'=>'payments'], function(){

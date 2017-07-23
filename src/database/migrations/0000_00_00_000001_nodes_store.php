@@ -514,6 +514,7 @@ class NodesStore extends Migration
             $table->enum('status', ['holding','confirmed','denied'])->nullable()->default('holding');
             $table->string('image')->nullable();
             $table->text('observations')->nullable();
+            $table->timestamps();
             $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
             $table->foreign('sale_payment_id')->references('id')->on('sale_payments')->onDelete('cascade');
         });

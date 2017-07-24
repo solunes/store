@@ -15,10 +15,10 @@
     <tbody>
       @foreach($items as $item)
         <tr>
-          <td class="product-thumbnail"><a target="_blank" href="{{ url('product/'.$item->product->slug) }}">
+          <td class="product-thumbnail"><a target="_blank" href="{{ url('producto/'.$item->product->slug) }}">
             {!! Asset::get_image('product-image', 'cart', $item->product->image) !!}
           </a></td>
-          <td class="product-name"><a target="_blank" href="{{ url('product/'.$item->product->slug) }}">{{ $item->product->name }}</a></td>
+          <td class="product-name"><a target="_blank" href="{{ url('producto/'.$item->product->slug) }}">{{ $item->product->name }}</a></td>
           <td class="product-price"><span class="amount">Bs. {{ $item->price }}</span></td>
           <td class="product-quantity">
           	@if($editable)

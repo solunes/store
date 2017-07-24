@@ -17,6 +17,10 @@
       border-bottom: 1px solid #ddd; }
   .solunes-store .method-title {
     margin-top: 30px; }
+  .solunes-store .panel-title {
+    font-weight: bold; }
+  .solunes-store .payment-method {
+    margin-bottom: 30px; }
   .solunes-store table.table-store {
     margin-bottom: 30px; }
     .solunes-store table.table-store td.strong {
@@ -44,7 +48,10 @@
       height: 40px;
       padding: 0 5px 0 10px;
       width: 60px; }
-    .solunes-store table.table-store .product-thumbnail, .solunes-store table.table-store .product-price {
+    .solunes-store table.table-store .product-thumbnail {
+      width: 80px;
+      padding: 10px; }
+    .solunes-store table.table-store .product-price {
       width: 130px; }
     .solunes-store table.table-store .product-quantity {
       width: 180px; }

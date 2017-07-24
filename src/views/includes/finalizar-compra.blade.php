@@ -16,7 +16,7 @@
               @foreach($cart->cart_items as $item)
                 <tr class="cart_item">
                   <td class="product-name">
-                    {{ $item->product->name }} <strong class="product-quantity"> X {{ $item->quantity }}</strong>
+                    {{ $item->product->name }} <strong class="product-quantity">(x{{ $item->quantity }})</strong>
                   </td>
                   <td class="strong">Bs. {{ $item->total_price }}</td>
                 </tr>

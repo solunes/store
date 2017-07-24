@@ -20,7 +20,8 @@
   .solunes-store .panel-title {
     font-weight: bold; }
   .solunes-store .payment-method {
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    margin-top: 20px; }
   .solunes-store table.table-store {
     margin-bottom: 30px; }
     .solunes-store table.table-store td.strong {

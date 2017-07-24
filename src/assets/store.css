@@ -50,3 +50,19 @@
     padding: 20px;
     margin-bottom: 30px;
     border: 1px solid #e5e5e5; }
+  .solunes-store input {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    height: 42px;
+    width: 100%;
+    padding: 0 0 0 10px; }
+  .solunes-store select {
+    width: 100%;
+    background: #eceff8;
+    border: 2px solid #eceff8;
+    height: 45px;
+    padding-left: 10px;
+    box-shadow: none;
+    font-size: 14px;
+    color: #626262; }

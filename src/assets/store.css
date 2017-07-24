@@ -41,8 +41,12 @@
     height: 40px;
     padding: 0 5px 0 10px;
     width: 60px; }
-  .solunes-store table.table-store td.product-thumbnail {
-    width: 120px; }
+  .solunes-store table.table-store td.product-thumbnail, .solunes-store table.table-store td.product-price {
+    width: 130px; }
+  .solunes-store table.table-store td.product-quantity {
+    width: 180px; }
+  .solunes-store table.table-store td.product-name {
+    width: 270px; }
   .solunes-store table.table-store .amount {
     font-size: 15px;
     font-weight: 700; }
@@ -50,6 +54,8 @@
     padding: 20px;
     margin-bottom: 30px;
     border: 1px solid #e5e5e5; }
+  .solunes-store .checkout-form-list {
+    margin-bottom: 30px; }
   .solunes-store input {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #e5e5e5;
@@ -67,4 +73,6 @@
     font-size: 14px;
     color: #626262; }
   .solunes-store input.btn-site {
-    width: auto; }
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px; }

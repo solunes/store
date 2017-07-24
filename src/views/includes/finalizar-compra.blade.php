@@ -18,26 +18,23 @@
                   <td class="product-name">
                     {{ $item->product->name }} <strong class="product-quantity"> X {{ $item->quantity }}</strong>
                   </td>
-                  <td class="product-total">
-                    <span class="amount">Bs. {{ $item->total_price }}</span>
-                  </td>
+                  <td class="strong">Bs. {{ $item->total_price }}</td>
                 </tr>
               @endforeach
             @endif
           </tbody>
           <tfoot>
             <tr class="cart-subtotal">
-              <th>Subtotal</th>
-              <td>Bs. <span class="amount">{{ $total }}</span></td>
+              <th>SUBTOTAL</th>
+              <th>Bs. <span class="amount">{{ $total }}</span></th>
             </tr>
-            <tr class="cart-subtotal">
-              <th>Costo de Envío ({{ round($weight, 1) }} kg.)</th>
-              <td>Bs. <span class="amount shipping_cost">0</span></td>
+            <tr>
+              <td>Costo de Envío ({{ round($weight, 1) }} kg.)</td>
+              <td class="strong">Bs. <span class="shipping_cost">0</span></td>
             </tr>
             <tr class="order-total">
               <th>Precio Total</th>
-              <td><strong>Bs. <span class="amount total_cost">{{ $total }}</span></strong>
-              </td>
+              <th>Bs. <span class="amount total_cost">{{ $total }}</span></th>
             </tr>               
           </tfoot>
         </table>

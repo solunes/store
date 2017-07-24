@@ -12,15 +12,15 @@
   <div class="col-lg-6 col-md-6">
     <h3>MÉTODO DE ENVÍO</h3>
     @foreach($sale->sale_deliveries as $delivery)
-      <h4>{{ mb_strtoupper($delivery->shipping->name, 'UTF-8') }}</h4>
       <div class="store-form">           
+        <h4>{{ mb_strtoupper($delivery->shipping->name, 'UTF-8') }}</h4>
         {!! $delivery->shipping->content !!}
       </div>
     @endforeach
     <h3>MÉTODO DE PAGO</h3>
     @foreach($sale_payments as $payment)
-      <h4>{{ mb_strtoupper($payment->payment->name, 'UTF-8') }}</h4>
       <div class="store-form">           
+        <h4>{{ mb_strtoupper($payment->payment->name, 'UTF-8') }}</h4>
         {!! $payment->payment->content !!}
       </div>
       @include('store::includes.sp-'.$payment->payment->code)

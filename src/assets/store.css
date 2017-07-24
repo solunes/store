@@ -19,6 +19,8 @@
     margin-top: 30px; }
   .solunes-store table.table-store {
     margin-bottom: 30px; }
+    .solunes-store table.table-store td.strong {
+      font-weight: bold; }
     .solunes-store table.table-store tr {
       display: table-row; }
     .solunes-store table.table-store th {

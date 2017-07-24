@@ -14,7 +14,7 @@ class StoreServiceProvider extends ServiceProvider {
             __DIR__ . '/config' => config_path()
         ], 'config');
         $this->publishes([
-            __DIR__.'/assets/store' => public_path('assets/store'),
+            __DIR__.'/assets' => public_path('assets/store'),
         ], 'assets');
 
         /* Cargar Traducciones */

@@ -13,6 +13,9 @@ class StoreServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__ . '/config' => config_path()
         ], 'config');
+        $this->publishes([
+            __DIR__.'/assets/store' => public_path('assets/store'),
+        ], 'assets');
 
         /* Cargar Traducciones */
         $this->loadTranslationsFrom(__DIR__.'/lang', 'store');

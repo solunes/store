@@ -2,6 +2,7 @@
 @include('helpers.meta')
 
 @section('css')
+  <link rel="stylesheet" href="{{ asset('assets/store/store.css') }}">
 @endsection
 
 @section('header')
@@ -24,12 +25,10 @@
 
 @section('content')
 <!-- checkout-area start -->
-<div class="checkout-area">
-  <div class="container">
+<div class="container solunes-store">
 
-    @include('store::includes.finalizar-compra')
+  @include('store::includes.finalizar-compra')
 
-  </div>
 </div>
 <!-- checkout-area end -->  
 @endsection

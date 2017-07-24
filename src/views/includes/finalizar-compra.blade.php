@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-lg-6 col-md-6">
 
-    <div class="your-order">
-      <h3>Su Orden</h3>
-      <div class="your-order-table table-responsive">
-        <table>
+    <div class="order-block">
+      <h3>SU ORDEN</h3>
+      <div class="order-summary">
+        <table class="table table-bordered-top table-responsive table-store">
           <thead>
             <tr>
               <th class="product-name">Producto</th>
@@ -89,28 +89,22 @@
   <div class="col-lg-6 col-md-6">
     @if(!$auth)
       <h3>INICIAR SESIÓN</h3>
-      <div class="coupon-content">
-        <div class="coupon-info">
-          <p class="coupon-text">Si ya tiene una cuenta de usuario, inicie sesión con su usuario y contraseña. Si no recuerda su contraseña, puede <a href="{{ url('') }}">recuperarla aquí</a>.</p>
-          <?php request()->session()->put('url.intended', request()->url()); ?>
-          <form action="{{ url('auth/login') }}" method="post">
-            <p class="form-row-first">
-              <label>Email o Celular <span class="required">*</span></label>
-              {!! Form::text('user', NULL) !!}
-            </p>
-            <p class="form-row-last">
-              <label>Contraseña  <span class="required">*</span></label>
-              {!! Form::password('password', NULL) !!}
-            </p>
-            <p class="form-row">          
-              <input type="submit" value="Iniciar Sesión">
-              <label>
-                {!! Form::checkbox('remember', NULL) !!}
-                 Recordarme 
-              </label>
-            </p>
-          </form>
-        </div>
+      <div class="store-form">
+        <p>Si ya tiene una cuenta de usuario, inicie sesión con su usuario y contraseña. Si no recuerda su contraseña, puede <a href="{{ url('') }}">recuperarla aquí</a>.</p>
+        <?php request()->session()->put('url.intended', request()->url()); ?>
+        <form action="{{ url('auth/login') }}" method="post">
+          <p class="form-row-first">
+            <label>Email o Celular <span class="required">*</span></label>
+            {!! Form::text('user', NULL) !!}
+          </p>
+          <p class="form-row-last">
+            <label>Contraseña  <span class="required">*</span></label>
+            {!! Form::password('password', NULL) !!}
+          </p>
+          <p class="form-row">          
+            <input class="btn btn-site" type="submit" value="INICIAR SESIÓN">
+          </p>
+        </form>
       </div>
     @endif
     <form action="{{ url('process/finish-sale') }}" method="post">
@@ -119,7 +113,7 @@
       @else
         <h3>DATOS DE ENVÍO</h3>
       @endif
-      <div class="coupon-content checkbox-form">           
+      <div class="store-form">           
         <div class="row">
           <div class="col-md-12">
             <div class="country-select">
@@ -194,10 +188,8 @@
             </div>  
           @endif
           <div class="col-md-12">
-            <div class="order-button-payment">
-              <input name="cart_id" type="hidden" value="{{ $cart->id }}">
-              <input type="submit" value="Finalizar Compra">
-            </div>
+            <input name="cart_id" type="hidden" value="{{ $cart->id }}">
+            <input class="btn btn-site" type="submit" value="FINALIZAR COMPRA">
           </div>
         </div>   
       </div>

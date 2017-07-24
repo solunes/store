@@ -2,6 +2,7 @@
 @include('helpers.meta')
 
 @section('css')
+  <link rel="stylesheet" href="{{ asset('assets/store/store.css') }}">
 @endsection
 
 @section('header')
@@ -23,7 +24,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container solunes-store">
   @include('store::includes.confirmar-compra')
 </div>
 @endsection

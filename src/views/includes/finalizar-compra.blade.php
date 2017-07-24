@@ -44,7 +44,7 @@
       </div>
 
       @if(count($shipping_descriptions)>0)
-        <h4 class="method-title">Métodos de Envío</h4>
+        <h3>MÉTODOS DE ENVÍO</h3>
         <div class="payment-method">
           <div class="payment-accordion">
             <div class="panel-group" id="accordion-shipping" role="tablist" aria-multiselectable="true">
@@ -64,7 +64,7 @@
       @endif
 
       @if(count($payment_descriptions)>0)
-        <h4 class="method-title">Métodos de Pago</h4>
+        <h3>MÉTODOS DE PAGO</h3>
         <div class="payment-method">
           <div class="payment-accordion">
             <div class="panel-group" id="accordion-payment" role="tablist" aria-multiselectable="true">
@@ -93,14 +93,14 @@
         <p>Si ya tiene una cuenta de usuario, inicie sesión con su usuario y contraseña. Si no recuerda su contraseña, puede <a href="{{ url('') }}">recuperarla aquí</a>.</p>
         <?php request()->session()->put('url.intended', request()->url()); ?>
         <form action="{{ url('auth/login') }}" method="post">
-          <p class="form-row-first">
+          <div class="checkout-form-list">
             <label>Email o Celular <span class="required">*</span></label>
             {!! Form::text('user', NULL) !!}
-          </p>
-          <p class="form-row-last">
+          </div>
+          <div class="checkout-form-list">
             <label>Contraseña  <span class="required">*</span></label>
             {!! Form::password('password', NULL) !!}
-          </p>
+          </div>
           <p class="form-row">          
             <input class="btn btn-site" type="submit" value="INICIAR SESIÓN">
           </p>
@@ -116,7 +116,7 @@
       <div class="store-form">           
         <div class="row">
           <div class="col-md-12">
-            <div class="country-select">
+            <div class="checkout-form-list">
               <label>Ciudad <span class="required">*</span></label>
               {!! Form::select('city_id', $cities, $city_id, ['id'=>'city_id', 'class'=>'query_shipping']) !!}                   
             </div>

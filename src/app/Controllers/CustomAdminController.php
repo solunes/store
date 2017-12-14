@@ -49,7 +49,7 @@ class CustomAdminController extends Controller {
 		$currencies = \Solunes\Store\App\Currency::get();
 		foreach($currencies as $currency){
 			foreach($currencies as $currency_2){
-				print_r('Main: '.$currency->name.' - Sub: '.$currency_2->name.': '.\Func::calculate_currency($value, $currency, $currency_2).'<br>');
+				print_r('Main: '.$currency->name.' - Sub: '.$currency_2->name.': '.\Store::calculate_currency($value, $currency, $currency_2).'<br>');
 			}
 		}
 	}

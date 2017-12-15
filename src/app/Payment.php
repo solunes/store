@@ -32,4 +32,8 @@ class Payment extends Model {
         return $query->orderBy('order', 'ASC');
     }
 
+    public function account() {
+        return $this->belongsTo('Solunes\Store\App\Account');
+    }
+
 }

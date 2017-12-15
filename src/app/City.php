@@ -38,4 +38,8 @@ class City extends Model {
         return $query->orderBy('order', 'ASC');
     }
 
+    public function region() {
+        return $this->belongsTo('Solunes\Store\App\Region');
+    }
+
 }

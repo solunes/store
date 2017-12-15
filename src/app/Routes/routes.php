@@ -31,4 +31,8 @@ Route::group(['prefix'=>'payments'], function(){
     Route::post('/bank-deposit/make-payment', 'Payment\BankDepositController@postMakePayment');
     // Pagosnet
     Route::post('/pagosnet/make-payment', 'Payment\PagosnetController@postMakePayment');
+    // TodoTix
+    Route::get('/todotix/make-payment/{sale_id}', 'Payment\TodotixController@getMakePayment');
+    //Route::post('/todotix/make-payment', 'Payment\TodotixController@postMakePayment');
+
 });

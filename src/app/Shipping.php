@@ -32,6 +32,10 @@ class Shipping extends Model {
         return $query->orderBy('order', 'ASC');
     }
 
+    public function city() {
+        return $this->belongsTo('Solunes\Store\App\City');
+    }
+
     public function shipping_cities() {
         return $this->hasMany('Solunes\Store\App\ShippingCity', 'parent_id');
     }

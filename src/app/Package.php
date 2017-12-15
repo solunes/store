@@ -11,19 +11,19 @@ class Package extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'place_id'=>'required',
-		'currency_id'=>'required',
         'name'=>'required',
-        'type'=>'required',
+		'active'=>'required',
+		'currency_id'=>'required',
+        'price'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
 		'id'=>'required',
-		'place_id'=>'required',
-        'currency_id'=>'required',
         'name'=>'required',
-        'type'=>'required',
+		'active'=>'required',
+		'currency_id'=>'required',
+        'price'=>'required',
 	);
 
     public function currency() {

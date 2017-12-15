@@ -12,18 +12,24 @@ class Currency extends Model {
 	/* Creating rules */
 	public static $rules_create = array(
 		'name'=>'required',
+		'code'=>'required',
+		'real_name'=>'required',
+		'plural'=>'required',
 		'type'=>'required',
-		'in_accounts'=>'required',
 		'main_exchange'=>'required',
+		'in_accounts'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
 		'id'=>'required',
 		'name'=>'required',
+		'code'=>'required',
+		'real_name'=>'required',
+		'plural'=>'required',
 		'type'=>'required',
-		'in_accounts'=>'required',
 		'main_exchange'=>'required',
+		'in_accounts'=>'required',
 	);
 
     public function getNameAttribute() {

@@ -11,19 +11,17 @@ class City extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
+		'region_id'=>'required',
 		'name'=>'required',
-		'type'=>'required',
-		'in_accounts'=>'required',
-		'main_exchange'=>'required',
+		'active'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
 		'id'=>'required',
+		'region_id'=>'required',
 		'name'=>'required',
-		'type'=>'required',
-		'in_accounts'=>'required',
-		'main_exchange'=>'required',
+		'active'=>'required',
 	);
 
     public function scopeActive($query) {

@@ -32,7 +32,7 @@ class Account extends Model {
     }
          
     public function place_accountability() {
-        return $this->belongsTo('Solunes\Store\App\PlaceAccountability');
+        return $this->hasMany('Solunes\Store\App\PlaceAccountability');
     }
 
 }

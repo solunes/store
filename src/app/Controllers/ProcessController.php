@@ -216,7 +216,9 @@ class ProcessController extends Controller {
       $user->address = $request->input('address');
       $user->address_extra = $request->input('address_extra');
       $user->save();
-
+      $member = \Solunes\Master\App\Role::where('name', 'member')->first();
+      $user->role_user()->sync([$member->id]);
+      
       // Sale
       $total_cost = $order_cost + $shipping_cost;
       $place = \Solunes\Store\App\Place::find(1); // Parametrizar tienda en config

@@ -37,6 +37,7 @@ class TodotixController extends Controller {
       );
 
       // Generación de items para el carro al detalle de Todotix
+      $fields = [];
       foreach($sale->sale_items as $sale_item){
         $sub_field = [];
         $sub_field['concepto'] = $sale_item->product->name;
@@ -59,8 +60,6 @@ class TodotixController extends Controller {
       curl_setopt_array($ch, $options);
       $result = curl_exec($ch);
       curl_close($ch);  
-
-      print_r($result);
 
       $product_result = json_decode($result);
 

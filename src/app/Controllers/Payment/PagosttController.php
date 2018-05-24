@@ -61,17 +61,15 @@ class TodotixController extends Controller {
       $result = curl_exec($ch);
       curl_close($ch);  
 
-      $product_result = json_decode($result);
+      // Decodificar resultado
+      $decoded_result = json_decode($result);
+      
+      if(!isset($decoded_result->url_pasarela_pagos)){
+        return redirect($this->prev)->with('message_error', 'Hubo un error al procesar su compra.');
+      }
 
-      $transaction_id = $product_result->id_transaccion;
-      $api_url = $product_result->url_pasarela_pagos;
-
-      // Generación de Transacción y Redirección
-      /*if(count($sale->payment_receipts)>0){
-        
-      } else {
-        $sale_payment = \Store::create_sale_payment($payment, $sale, $sale->amount, 'Detalle');
-      }*/
+      $transaction_id = $decoded_result->id_transaccion;
+      $api_url = $decoded_result->url_pasarela_pagos;
 
       return redirect($api_url);
     } else {

@@ -26,7 +26,7 @@ class TodotixController extends Controller {
       $delivery = $sale->sale_deliveries()->first();
 
       $final_fields = array(
-        "appkey" => 'c26d8c99-8836-4cd5-a850-230c9d3fbf3c',
+        "appkey" => config('store.pagostt_code'),
         "email_cliente" => $user->email,
         "descripcion" => "Pago Compra Online",
         "callback_url" => url('process/sale/'.$sale->id).'/?success=done',

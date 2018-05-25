@@ -66,7 +66,7 @@ class TodotixController extends Controller {
       
       if(!isset($decoded_result->url_pasarela_pagos)){
         \Log::info('Error Resultado: '.json_encode($decoded_result));
-        return redirect($this->prev)->with('message_error', 'Hubo un error al procesar su compra.');
+        return redirect('inicio')->with('message_error', 'Hubo un error al procesar su compra.');
       }
 
       $transaction_id = $decoded_result->id_transaccion;
@@ -74,7 +74,7 @@ class TodotixController extends Controller {
 
       return redirect($api_url);
     } else {
-      return redirect($this->prev)->with('message_error', 'Hubo un error al encontrar su compra.');
+      return redirect('inicio')->with('message_error', 'Hubo un error al encontrar su compra.');
     }
   }
 

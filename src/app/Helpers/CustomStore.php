@@ -7,6 +7,7 @@ use Form;
 class CustomStore {
    
     public static function after_seed_actions() {
+        // Arreglar Action Fields y Action Nodes
         $node_array['currency'] = ['action_field'=>['edit']];
         $node_array['place'] = ['action_field'=>['edit']];
         $node_array['tax'] = ['action_field'=>['edit']];

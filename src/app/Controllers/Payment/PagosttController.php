@@ -29,7 +29,7 @@ class TodotixController extends Controller {
         "appkey" => config('store.pagostt_code'),
         "email_cliente" => $user->email,
         "descripcion" => "Pago Compra Online",
-        "callback_url" => url('process/paid-sale/'.\Crypt::encrypt($sale->id)).'/?success=done',
+        "callback_url" => url('process/paid-sale/'.urlencode(\Crypt::encrypt($sale->id)),
         "razon_social" => $sale->invoice_name,
         "nit" => $sale->invoice_nit,
         "valor_envio" => $delivery->shipping_cost,

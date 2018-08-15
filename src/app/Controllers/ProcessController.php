@@ -307,7 +307,7 @@ class ProcessController extends Controller {
   }
 
   public function getPaidSale($encrypted_sale_id) {
-    $sale_id = \Crypt::decrypt($encrypted_sale_id);
+    $sale_id = urldecode(\Crypt::decrypt($encrypted_sale_id));
     if($sale = \Solunes\Store\App\Sale::findId($sale_id)->first()){
       $sale->paid_amount = $sale->amount;
       /*if($sale->invoice){

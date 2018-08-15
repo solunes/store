@@ -306,8 +306,11 @@ class ProcessController extends Controller {
     }
   }
 
+
   public function getPaidSale($encrypted_sale_id) {
+    \Log::info('test_payment_1: '.$encrypted_sale_id);
     $sale_id = urldecode(\Crypt::decrypt($encrypted_sale_id));
+    \Log::info('test_payment_2: '.$sale_id);
     if($sale = \Solunes\Store\App\Sale::find($sale_id)){
       $sale->paid_amount = $sale->amount;
       /*if($sale->invoice){
@@ -316,9 +319,9 @@ class ProcessController extends Controller {
       }*/
       $sale->status = 'paid';
       $sale->save();
-      return redirect($this->prev)->with('message_success', 'Su pago fue procesado correctamente, nos contactarémos con usted cuando realicemos el envío.');
+      return redirect('inicio#alert')->with('message_success', 'Su pago fue procesado correctamente, nos contactarémos con usted cuando realicemos el envío.');
     } else {
-      return redirect('inicio')->with('message_error', 'Hubo un error al encontrar su pago.');
+      return redirect('inicio#alert')->with('message_error', 'Hubo un error al encontrar su pago.');
     }
   }
 

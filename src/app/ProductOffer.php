@@ -11,15 +11,12 @@ class ProductOffer extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'parent_id'=>'required',
 		'name'=>'required',
 		'image'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
-		'id'=>'required',
-		'parent_id'=>'required',
 		'name'=>'required',
 		'image'=>'required',
 	);

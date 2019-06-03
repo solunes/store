@@ -229,7 +229,7 @@ class ProcessController extends Controller {
       $sale->currency_id = $currency->id;
       $sale->order_amount = $order_cost;
       $sale->amount = $total_cost;
-      $sale->invoice = false;
+      $sale->invoice = true;
       $sale->type = 'online';
       $sale->save();
 
@@ -303,6 +303,22 @@ class ProcessController extends Controller {
       return view($view, $array);
     } else {
       return redirect($this->prev)->with('message_error', 'Hubo un error al encontrar su compra.');
+    }
+  }
+
+  public function getPaidSale($encrypted_sale_id) {
+    $sale_id = urldecode(\Crypt::decrypt($encrypted_sale_id));
+    if($sale = \Solunes\Store\App\Sale::find($sale_id)){
+      $sale->paid_amount = $sale->amount;
+      /*if($sale->invoice){
+        $sale->invoice_name = request()->input('invoice_name');
+        $sale->invoice_nit = request()->input('invoice_nit');
+      }*/
+      $sale->status = 'paid';
+      $sale->save();
+      return redirect($this->prev)->with('message_success', 'Su pago fue procesado correctamente, nos contactarémos con usted cuando realicemos el envío.');
+    } else {
+      return redirect('inicio')->with('message_error', 'Hubo un error al encontrar su pago.');
     }
   }
 
